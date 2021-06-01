@@ -60,8 +60,17 @@ class HomePage extends StatelessWidget {
                 itemCount: productController.productList.length,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
+
+                //physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
-                  return ProductTile(productController.productList[index]);
+                  if (productController.productList[index].rating != null) {
+                    return ProductTile(productController.productList[index]);
+                  } else {
+                    return SizedBox(
+                      height: 0,
+                      width: 0,
+                    );
+                  }
                 },
                 staggeredTileBuilder: (index) => StaggeredTile.fit(1),
               );

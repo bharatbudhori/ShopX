@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_x/models/product.dart';
+import 'package:get/get.dart';
+import 'package:shop_x/views/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
   final Product product;
@@ -16,16 +18,30 @@ class ProductTile extends StatelessWidget {
           children: [
             Stack(
               children: [
-                Container(
-                  height: 180,
-                  width: double.infinity,
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(4),
-                  ),
-                  child: Image.network(
-                    product.imageLink,
-                    fit: BoxFit.cover,
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => ProductDetailScreen(
+                          description: product.description,
+                          price: product.price,
+                          rating: product.rating,
+                          imageURL: product.imageLink,
+                          productName: product.name,
+                        ));
+                  },
+                  child: Container(
+                    height: 180,
+                    width: double.infinity,
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(4),
+                    ),
+                    child: Hero(
+                      tag: product.imageLink,
+                      child: Image.network(
+                        product.imageLink,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
