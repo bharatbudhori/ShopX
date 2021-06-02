@@ -20,6 +20,7 @@ class ProductTile extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
+                    print(product.id);
                     Get.to(() => ProductDetailScreen(
                           description: product.description,
                           price: product.price,
@@ -57,6 +58,14 @@ class ProductTile extends StatelessWidget {
                             Icon(Icons.favorite_rounded),
                         //: Icon(Icons.favorite_border),
                         onPressed: () {
+                          Get.snackbar(
+                            product.name,
+                            'Added to favorite',
+                            backgroundColor: Colors.pink[100],
+                            barBlur: 12,
+                            duration: Duration(milliseconds: 1500),
+                          );
+
                           //product.favoriteToggle();
                         },
                       ),

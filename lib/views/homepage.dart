@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/product_controller.dart';
+import 'package:shop_x/views/cart_screen.dart';
+import 'package:shop_x/views/filter_content.dart';
 import 'package:shop_x/views/product_tile.dart';
 
 class HomePage extends StatelessWidget {
@@ -18,7 +20,18 @@ class HomePage extends StatelessWidget {
         actions: [
           IconButton(
             icon: Icon(Icons.shopping_cart),
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => CartScreen());
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.filter_alt_sharp),
+            onPressed: () {
+              Get.defaultDialog(
+                title: 'Select Brand',
+                content: FilterContent(),
+              );
+            },
           ),
         ],
       ),
@@ -66,10 +79,7 @@ class HomePage extends StatelessWidget {
                   if (productController.productList[index].rating != null) {
                     return ProductTile(productController.productList[index]);
                   } else {
-                    return SizedBox(
-                      height: 0,
-                      width: 0,
-                    );
+                    return Text('No data');
                   }
                 },
                 staggeredTileBuilder: (index) => StaggeredTile.fit(1),
