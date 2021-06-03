@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/views/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
+  final CartController cartController =
+      Get.put(CartController(), permanent: true);
   final Product product;
-  const ProductTile(this.product);
+  ProductTile(this.product);
 
   @override
   Widget build(BuildContext context) {
@@ -46,30 +49,36 @@ class ProductTile extends StatelessWidget {
                   ),
                 ),
                 Positioned(
-                    right: 0,
-                    child:
-                        //Obx(() =>
-                        CircleAvatar(
-                      backgroundColor: Colors.white,
-                      child: IconButton(
-                        icon:
-                            //product.isFavorite
-                            //?
-                            Icon(Icons.favorite_rounded),
-                        //: Icon(Icons.favorite_border),
-                        onPressed: () {
-                          Get.snackbar(
-                            product.name,
-                            'Added to favorite',
-                            backgroundColor: Colors.pink[100],
-                            barBlur: 12,
-                            duration: Duration(milliseconds: 1500),
-                          );
+                  right: 0,
+                  child:
+                      //Obx(
+                      //() =>
+                      CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: IconButton(
+                      icon:
+                          //product.isFavorite
+                          //?
+                          Icon(Icons.favorite_rounded),
+                      //: Icon(Icons.favorite_border),
+                      onPressed: () {
+                        cartController.addProductsToCart(product.id,
+                            product.name, 1, product.imageLink, product.price);
 
-                          //product.favoriteToggle();
-                        },
-                      ),
-                    )),
+                        print(cartController.cartProductList[0].name);
+                        Get.snackbar(
+                          product.name,
+                          'Added to favorite',
+                          backgroundColor: Colors.pink[100],
+                          barBlur: 12,
+                          duration: Duration(milliseconds: 1500),
+                        );
+
+                        //product.favoriteToggle();
+                      },
+                    ),
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 8),

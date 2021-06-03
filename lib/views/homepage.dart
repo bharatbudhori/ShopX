@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
-import 'package:shop_x/views/filter_content.dart';
+//import 'package:shop_x/views/filter_content.dart';
 import 'package:shop_x/views/product_tile.dart';
 
 class HomePage extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
+  //final CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +31,7 @@ class HomePage extends StatelessWidget {
             onPressed: () {
               Get.defaultDialog(
                 title: 'Select Brand',
-                content: FilterContent(),
+                //content: FilterContent(),
               );
             },
           ),
