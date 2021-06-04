@@ -27,7 +27,7 @@ class Product {
     this.productApiUrl,
     this.apiFeaturedImage,
     this.productColors,
-    this.isFavorite,
+    this.isFavorite = false,
   });
 
   int id;

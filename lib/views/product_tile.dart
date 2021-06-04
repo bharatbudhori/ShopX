@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
+import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/views/product_detail_screen.dart';
@@ -23,7 +24,7 @@ class ProductTile extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print(product.id);
+                    print(product.isFavorite);
                     Get.to(() => ProductDetailScreen(
                           description: product.description,
                           price: product.price,
@@ -48,37 +49,26 @@ class ProductTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                Positioned(
-                  right: 0,
-                  child:
-                      //Obx(
-                      //() =>
-                      CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                      icon:
-                          //product.isFavorite
-                          //?
-                          Icon(Icons.favorite_rounded),
-                      //: Icon(Icons.favorite_border),
-                      onPressed: () {
-                        cartController.addProductsToCart(product.id,
-                            product.name, 1, product.imageLink, product.price);
-
-                        print(cartController.cartProductList[0].name);
-                        Get.snackbar(
-                          product.name,
-                          'Added to favorite',
-                          backgroundColor: Colors.pink[100],
-                          barBlur: 12,
-                          duration: Duration(milliseconds: 1500),
-                        );
-
-                        //product.favoriteToggle();
-                      },
-                    ),
-                  ),
-                ),
+                GetBuilder<ProductController>(
+                    init: Get.find<ProductController>(),
+                    builder: (controller) {
+                      return Positioned(
+                        right: 0,
+                        child: //Obx(
+                            //() =>
+                            CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            icon: product.isFavorite
+                                ? Icon(Icons.favorite_rounded)
+                                : Icon(Icons.favorite_border),
+                            onPressed: () {
+                              controller.toogleFavorite(product);
+                            },
+                          ),
+                        ),
+                      );
+                    }),
               ],
             ),
             SizedBox(height: 8),
@@ -113,8 +103,31 @@ class ProductTile extends StatelessWidget {
                 ),
               ),
             SizedBox(height: 8),
-            Text('\$${product.price}',
-                style: TextStyle(fontSize: 32, fontFamily: 'avenir')),
+            Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    '\$${product.price}',
+                    style: TextStyle(fontSize: 32, fontFamily: 'avenir'),
+                  ),
+                ),
+                IconButton(
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      cartController.addProductsToCart(product.id, product.name,
+                          1, product.imageLink, product.price);
+
+                      print(cartController.cartProductList[0].name);
+                      Get.snackbar(
+                        product.name,
+                        'Added to favorite',
+                        backgroundColor: Colors.pink[100],
+                        barBlur: 12,
+                        duration: Duration(milliseconds: 1500),
+                      );
+                    })
+              ],
+            ),
           ],
         ),
       ),

@@ -24,4 +24,9 @@ class ProductController extends GetxController {
       isLoading(false);
     }
   }
+
+  void toogleFavorite(Product product) {
+    product.isFavorite = !product.isFavorite;
+    update();
+  }
 }

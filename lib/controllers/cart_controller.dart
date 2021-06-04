@@ -90,4 +90,9 @@ class CartController extends GetxController {
           imageUrl: imageURL),
     );
   }
+
+  void deletion(CartItem cartItem) {
+    cartProductList.removeWhere((element) => element.id == cartItem.id);
+    update();
+  }
 }

@@ -34,10 +34,29 @@ class CartScreen extends StatelessWidget {
                 ),
               ),
               title: Text(cartController.cartProductList[index].name),
-              trailing: Text(
-                '\$${cartController.cartProductList[index].price}',
-                style: TextStyle(
-                  fontSize: 20,
+              trailing: Container(
+                width: 30,
+                height: 20,
+                child: Row(
+                  children: [
+                    Text(
+                      '\$${cartController.cartProductList[index].price}',
+                      style: TextStyle(
+                        fontSize: 20,
+                      ),
+                    ),
+                    //  GetBuilder(
+                    //     init: Get.find<CartController>(),
+                    //     builder: (controller) {
+                    //       return IconButton(
+                    //           icon: Icon(Icons.delete),
+                    //           onPressed: () {
+                    //             cartController.deletion(
+                    //                 cartController.cartProductList[index]);
+                    //           });
+                    //     },
+                    //   ),
+                  ],
                 ),
               ),
             ),
