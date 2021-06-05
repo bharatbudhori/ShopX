@@ -91,8 +91,8 @@ class CartController extends GetxController {
     );
   }
 
-  void deletion(CartItem cartItem) {
-    cartProductList.removeWhere((element) => element.id == cartItem.id);
+  void deletion(int index) {
+    cartProductList.removeAt(index);
     update();
   }
 }

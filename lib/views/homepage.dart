@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
-import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
 //import 'package:shop_x/views/filter_content.dart';
 import 'package:shop_x/views/product_tile.dart';
+
+import 'favorite_screen.dart';
 
 class HomePage extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
@@ -15,11 +16,16 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {},
-        ),
         actions: [
+          IconButton(
+            icon: Icon(
+              Icons.favorite_rounded,
+              color: Colors.red,
+            ),
+            onPressed: () {
+              Get.to(() => FavoriteScreen());
+            },
+          ),
           IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
@@ -35,7 +41,67 @@ class HomePage extends StatelessWidget {
               );
             },
           ),
+          IconButton(
+            icon: Icon(Icons.wb_sunny),
+            onPressed: () {
+              showBottomsheet();
+            },
+          ),
         ],
+      ),
+      drawer: Drawer(
+        child: Column(
+          children: [
+            Container(
+              height: 200,
+              color: Colors.pinkAccent,
+              alignment: Alignment.center,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CircleAvatar(
+                    radius: 40,
+                    backgroundImage: NetworkImage(
+                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0DI22pl34SeQZ9RBxIfjNGyjaquYEIvuVow&usqp=CAU',
+                    ),
+                  ),
+                  Text(
+                    'Maximilian   🖊️',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            ListTile(
+              onTap: () => Get.to(CartScreen()),
+              title: Text(
+                'Your Cart',
+                style: TextStyle(fontSize: 20),
+              ),
+              trailing: Icon(
+                Icons.shopping_cart,
+                color: Colors.indigo,
+              ),
+            ),
+            ListTile(
+              onTap: () => Get.to(FavoriteScreen()),
+              title: Text(
+                'Your Favorites',
+                style: TextStyle(fontSize: 20),
+              ),
+              trailing: Icon(
+                Icons.favorite,
+                color: Colors.pink,
+              ),
+            ),
+          ],
+        ),
       ),
       body: Column(
         children: [
@@ -92,4 +158,50 @@ class HomePage extends StatelessWidget {
       ),
     );
   }
+}
+
+void showBottomsheet() {
+  Get.bottomSheet(
+    Container(
+      color: Colors.white,
+      height: 160,
+      child: Wrap(
+        children: [
+          ListTile(
+            leading: Icon(
+              Icons.nights_stay_rounded,
+              color: Colors.black,
+            ),
+            title: Text(
+              'Dark Theem',
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              Get.changeTheme(
+                ThemeData.dark(),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
+            leading: Icon(
+              Icons.wb_sunny,
+              color: Colors.yellow,
+            ),
+            title: Text(
+              'Light Theem',
+              style: TextStyle(color: Colors.black),
+            ),
+            onTap: () {
+              Get.changeTheme(
+                ThemeData.light(),
+              );
+            },
+          ),
+        ],
+      ),
+    ),
+    backgroundColor: Colors.black,
+    enableDrag: true,
+  );
 }

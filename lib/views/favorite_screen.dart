@@ -1,27 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shop_x/controllers/cart_controller.dart';
+import 'package:shop_x/controllers/product_controller.dart';
+import 'package:shop_x/models/product.dart';
 
-class CartScreen extends StatelessWidget {
-  final CartController cartController =
-      Get.put(CartController(), permanent: true);
+class FavoriteScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Cart'),
-        actions: [
-          TextButton(
-            onPressed: () {},
-            child: Text('Order Now'),
-          ),
-        ],
+        title: Text('My Favotites ❤️'),
       ),
       body: GetBuilder(
-        init: cartController,
+        init: Get.find<ProductController>(),
         builder: (controller) {
           return ListView.builder(
-            itemCount: cartController.cartProductList.length,
+            itemCount: controller.favoriteList.length,
             itemBuilder: (context, index) {
               return Card(
                 elevation: 10,
@@ -33,12 +26,12 @@ class CartScreen extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 40,
                       backgroundImage: NetworkImage(
-                        cartController.cartProductList[index].imageUrl,
+                        controller.favoriteList[index].imageLink,
                       ),
                     ),
                   ),
                   title: Text(
-                    cartController.cartProductList[index].name,
+                    controller.favoriteList[index].name,
                     softWrap: true,
                   ),
                   trailing: Container(
@@ -47,7 +40,7 @@ class CartScreen extends StatelessWidget {
                     child: Row(
                       children: [
                         Text(
-                          '\$${cartController.cartProductList[index].price}',
+                          '\$${controller.favoriteList[index].price}',
                           style: TextStyle(
                             fontSize: 20,
                           ),
@@ -58,7 +51,8 @@ class CartScreen extends StatelessWidget {
                               color: Colors.red,
                             ),
                             onPressed: () {
-                              controller.deletion(index);
+                              controller.toogleFavorite(
+                                  controller.favoriteList[index]);
                             }),
                       ],
                     ),
