@@ -7,72 +7,72 @@ class CartController extends GetxController {
 
   @override
   void onInit() {
-    addDummyData();
+    //addDummyData();
     super.onInit();
   }
 
-  void addDummyData() {
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-    cartProductList.add(
-      CartItem(
-        id: 12204,
-        name: 'Gucci Bag',
-        quantity: 1,
-        price: '999',
-        imageUrl:
-            'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
-      ),
-    );
-  }
+  // void addDummyData() {
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  //   cartProductList.add(
+  //     CartItem(
+  //       id: 12204,
+  //       name: 'Gucci Bag',
+  //       quantity: 1,
+  //       price: '999',
+  //       imageUrl:
+  //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyvPLRjZ5IM9_GRlZ6Qz_E0JgItqWKFivkr3Ig-FgcQ_ZOUVHIjTQhRHdc4J49Al4C34u9RlPo&usqp=CAc',
+  //     ),
+  //   );
+  // }
 
   void addProductsToCart(
     int id,
@@ -89,6 +89,7 @@ class CartController extends GetxController {
           price: price,
           imageUrl: imageURL),
     );
+    update();
   }
 
   void deletion(int index) {

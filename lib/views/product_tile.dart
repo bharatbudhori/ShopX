@@ -24,7 +24,7 @@ class ProductTile extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    print(product.isFavorite);
+                    //print(product.isFavorite);
                     Get.to(() => ProductDetailScreen(
                           description: product.description,
                           price: product.price,
@@ -111,20 +111,42 @@ class ProductTile extends StatelessWidget {
                     style: TextStyle(fontSize: 32, fontFamily: 'avenir'),
                   ),
                 ),
-                IconButton(
-                    icon: Icon(Icons.shopping_cart),
-                    onPressed: () {
-                      cartController.addProductsToCart(product.id, product.name,
-                          1, product.imageLink, product.price);
+                GetBuilder(
+                    init: cartController,
+                    builder: (controller) {
+                      return IconButton(
+                          icon: cartController.cartProductList.any((element) =>
+                                  element.imageUrl == product.imageLink)
+                              ? Icon(Icons.shopping_cart)
+                              : Icon(Icons.shopping_cart_outlined),
+                          onPressed: () {
+                            if (cartController.cartProductList.any((element) =>
+                                element.imageUrl == product.imageLink)) {
+                              Get.defaultDialog(
+                                title: 'Item Already present in your Cart.',
+                                content: Text('Tap on screen to close dialog.'),
+                              );
+                            } else {
+                              cartController.addProductsToCart(
+                                  product.id,
+                                  product.name,
+                                  1,
+                                  product.imageLink,
+                                  product.price);
 
-                      print(cartController.cartProductList[0].name);
-                      Get.snackbar(
-                        product.name,
-                        'Added to favorite',
-                        backgroundColor: Colors.pink[100],
-                        barBlur: 12,
-                        duration: Duration(milliseconds: 1500),
-                      );
+                              print(cartController.cartProductList[0].name);
+                              Get.snackbar(
+                                product.name,
+                                'Added to favorite',
+                                backgroundColor: Colors.pink[100],
+                                barBlur: 12,
+                                duration: Duration(milliseconds: 1500),
+                                dismissDirection:
+                                    SnackDismissDirection.HORIZONTAL,
+                                overlayBlur: 2,
+                              );
+                            }
+                          });
                     })
               ],
             ),

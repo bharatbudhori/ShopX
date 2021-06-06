@@ -107,54 +107,6 @@ class FavoriteScreen extends StatelessWidget {
                   ),
                 ),
               );
-              // return GestureDetector(
-              //   onTap: () {
-              //     print(controller.favoriteList[index].name);
-              //   },
-              //   child: Card(
-              //     elevation: 8,
-              //     child: Row(
-              //       mainAxisAlignment: MainAxisAlignment.spaceAround,
-              //       children: [
-              //         Container(
-              //           height: 80,
-              //           width: 80,
-              //           decoration: BoxDecoration(
-              //             borderRadius: BorderRadius.circular(30),
-              //           ),
-              //           child: Image.network(
-              //               controller.favoriteList[index].imageLink),
-              //         ),
-              //         Expanded(
-              //           child: Padding(
-              //             padding: const EdgeInsets.all(8.0),
-              //             child: Text(
-              //               controller.favoriteList[index].name,
-              //               softWrap: true,
-              //               style: TextStyle(fontSize: 15),
-              //             ),
-              //           ),
-              //         ),
-              //         Text(
-              //           '\$${controller.favoriteList[index].price}',
-              //           style: TextStyle(
-              //             fontSize: 20,
-              //           ),
-              //         ),
-              //         IconButton(
-              //           icon: Icon(
-              //             Icons.delete,
-              //             color: Colors.red,
-              //           ),
-              //           onPressed: () {
-              //             controller
-              //                 .toogleFavorite(controller.favoriteList[index]);
-              //           },
-              //         ),
-              //       ],
-              //     ),
-              //   ),
-              // );
             },
           );
         },

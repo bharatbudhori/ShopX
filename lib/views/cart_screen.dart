@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 
 class CartScreen extends StatelessWidget {
-  final CartController cartController =
-      Get.put(CartController(), permanent: true);
+  final CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,6 +38,9 @@ class CartScreen extends StatelessWidget {
                   ],
                 ),
                 direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  controller.deletion(index);
+                },
                 child: Card(
                   elevation: 8,
                   child: Row(
