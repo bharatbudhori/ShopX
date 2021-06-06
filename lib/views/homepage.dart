@@ -86,8 +86,11 @@ class HomePage extends StatelessWidget {
               ),
               trailing: Icon(
                 Icons.shopping_cart,
-                color: Colors.indigo,
+                color: Colors.pink,
               ),
+            ),
+            Divider(
+              color: Colors.black,
             ),
             ListTile(
               onTap: () => Get.to(FavoriteScreen()),
@@ -97,6 +100,20 @@ class HomePage extends StatelessWidget {
               ),
               trailing: Icon(
                 Icons.favorite,
+                color: Colors.pink,
+              ),
+            ),
+            Divider(
+              color: Colors.black,
+            ),
+            ListTile(
+              //onTap: () => Get.to(FavoriteScreen()),
+              title: Text(
+                'Your Orders',
+                style: TextStyle(fontSize: 20),
+              ),
+              trailing: Icon(
+                Icons.shopping_bag_outlined,
                 color: Colors.pink,
               ),
             ),
@@ -147,7 +164,10 @@ class HomePage extends StatelessWidget {
                   if (productController.productList[index].rating != null) {
                     return ProductTile(productController.productList[index]);
                   } else {
-                    return Text('No data');
+                    return Text(
+                      '',
+                      style: TextStyle(fontSize: 0),
+                    );
                   }
                 },
                 staggeredTileBuilder: (index) => StaggeredTile.fit(1),

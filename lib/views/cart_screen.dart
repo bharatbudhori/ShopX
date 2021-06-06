@@ -23,45 +23,65 @@ class CartScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: cartController.cartProductList.length,
             itemBuilder: (context, index) {
-              return Card(
-                elevation: 10,
-                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                child: ListTile(
-                  leading: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 2, vertical: 1),
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                        cartController.cartProductList[index].imageUrl,
+              return Dismissible(
+                key: Key(controller.cartProductList[index].imageUrl),
+                background: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                        size: 50,
                       ),
                     ),
-                  ),
-                  title: Text(
-                    cartController.cartProductList[index].name,
-                    softWrap: true,
-                  ),
-                  trailing: Container(
-                    width: 100,
-                    height: 50,
-                    child: Row(
-                      children: [
-                        Text(
-                          '\$${cartController.cartProductList[index].price}',
-                          style: TextStyle(
-                            fontSize: 20,
+                  ],
+                ),
+                direction: DismissDirection.endToStart,
+                child: Card(
+                  elevation: 8,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(8),
+                        height: 70,
+                        width: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Image.network(
+                          controller.cartProductList[index].imageUrl,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            controller.cartProductList[index].name,
+                            softWrap: true,
+                            style: TextStyle(fontSize: 17),
                           ),
                         ),
-                        IconButton(
-                            icon: Icon(
-                              Icons.delete,
-                              color: Colors.red,
-                            ),
-                            onPressed: () {
-                              controller.deletion(index);
-                            }),
-                      ],
-                    ),
+                      ),
+                      Text(
+                        '\$${controller.cartProductList[index].price}    ',
+                        style: TextStyle(
+                          fontSize: 20,
+                        ),
+                      ),
+                      // IconButton(
+                      //   icon: Icon(
+                      //     Icons.delete,
+                      //     color: Colors.red,
+                      //   ),
+                      //   onPressed: () {
+                      //     controller.deletion(index);
+                      //   },
+                      // ),
+                    ],
                   ),
                 ),
               );

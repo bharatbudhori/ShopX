@@ -33,6 +33,7 @@ class ProductController extends GetxController {
     } else if (!product.isFavorite) {
       favoriteList.remove(product);
     }
+
     update();
   }
 }
