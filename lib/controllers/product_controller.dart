@@ -16,7 +16,7 @@ class ProductController extends GetxController {
   void fetchProducts() async {
     isLoading(true);
     try {
-      var products = await RemoteServices.fetchProducts();
+      var products = await RemoteServices.fetchCategoryProducts("l'oreal");
       //print(products);
       if (products != null) {
         productList.value = products;

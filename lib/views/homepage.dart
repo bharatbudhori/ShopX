@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
 //import 'package:shop_x/views/filter_content.dart';
 import 'package:shop_x/views/product_tile.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 import 'favorite_screen.dart';
 
 class HomePage extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
+  final CategoryController categoryController = Get.put(CategoryController());
   //final CartController cartController = Get.put(CartController());
   @override
   Widget build(BuildContext context) {
@@ -35,10 +38,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: Icon(Icons.filter_alt_sharp),
             onPressed: () {
-              Get.defaultDialog(
-                title: 'Select Brand',
-                //content: FilterContent(),
-              );
+              showBottomsheet2();
             },
           ),
           IconButton(
@@ -224,4 +224,78 @@ void showBottomsheet() {
     backgroundColor: Colors.black,
     enableDrag: true,
   );
+}
+
+void showBottomsheet2() {
+  Get.bottomSheet(
+    Container(
+      color: Colors.pink[100],
+      height: 220,
+      child: Center(
+        child: Container(
+          padding: EdgeInsets.symmetric(horizontal: 15),
+          height: 200,
+          child: ListView.builder(
+            shrinkWrap: true,
+            scrollDirection: Axis.horizontal,
+            itemCount: Get.find<CategoryController>().categoryList.length,
+            itemBuilder: (ctx, index) {
+              return CategoryTile(
+                imageUrl:
+                    Get.find<CategoryController>().categoryList[index].imageURL,
+                categoryName:
+                    Get.find<CategoryController>().categoryList[index].name,
+              );
+            },
+          ),
+        ),
+      ),
+    ),
+    backgroundColor: Colors.black,
+    enableDrag: true,
+  );
+}
+
+class CategoryTile extends StatelessWidget {
+  final String imageUrl, categoryName;
+
+  CategoryTile({this.imageUrl, this.categoryName});
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        height: 150,
+        width: 230,
+        margin: EdgeInsets.only(right: 10),
+        child: Column(
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(7),
+              child: Image(
+                image: NetworkImage(imageUrl),
+                height: 150,
+                width: 230,
+                fit: BoxFit.cover,
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  categoryName,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 25,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
