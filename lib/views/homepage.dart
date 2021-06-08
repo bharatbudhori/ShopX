@@ -18,6 +18,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        //backgroundColor: Colors.pink[100],
         elevation: 0,
         actions: [
           IconButton(
@@ -264,7 +265,9 @@ class CategoryTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Get.find<ProductController>().fetchProducts(categoryName);
+      },
       child: Container(
         height: 150,
         width: 230,

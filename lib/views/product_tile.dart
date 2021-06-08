@@ -134,7 +134,7 @@ class ProductTile extends StatelessWidget {
                                   product.imageLink,
                                   product.price);
 
-                              print(cartController.cartProductList[0].name);
+                              print(product.name);
                               Get.snackbar(
                                 product.name,
                                 'Added to favorite',

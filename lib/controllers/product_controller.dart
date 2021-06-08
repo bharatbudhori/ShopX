@@ -9,14 +9,17 @@ class ProductController extends GetxController {
 
   @override
   void onInit() {
-    fetchProducts();
+    fetchProducts(null);
     super.onInit();
   }
 
-  void fetchProducts() async {
+  void fetchProducts(String brand) async {
+    if (brand == null) {
+      brand = "maybelline";
+    }
     isLoading(true);
     try {
-      var products = await RemoteServices.fetchCategoryProducts("l'oreal");
+      var products = await RemoteServices.fetchCategoryProducts(brand);
       //print(products);
       if (products != null) {
         productList.value = products;

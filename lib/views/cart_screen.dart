@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
+import 'package:shop_x/views/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
@@ -11,7 +12,9 @@ class CartScreen extends StatelessWidget {
         title: Text('My Cart'),
         actions: [
           TextButton(
-            onPressed: () {},
+            onPressed: () {
+              Get.to(() => OrderScreen());
+            },
             child: Text('Order Now'),
           ),
         ],
