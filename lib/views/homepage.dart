@@ -4,10 +4,7 @@ import 'package:get/get.dart';
 import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
-//import 'package:shop_x/views/filter_content.dart';
 import 'package:shop_x/views/product_tile.dart';
-import 'package:cached_network_image/cached_network_image.dart';
-
 import 'favorite_screen.dart';
 
 class HomePage extends StatelessWidget {

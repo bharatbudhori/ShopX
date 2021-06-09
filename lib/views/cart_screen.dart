@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
+import 'package:shop_x/controllers/orders_controller.dart';
 import 'package:shop_x/views/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
+  final OrderController orderController = Get.put(OrderController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,6 +16,19 @@ class CartScreen extends StatelessWidget {
           TextButton(
             onPressed: () {
               Get.to(() => OrderScreen());
+
+              // for (int i = 0; i < cartController.cartProductList.length; i++) {
+              //   orderController.placeOrders(
+              //       cartController.cartProductList[i].id,
+              //       cartController.cartProductList[i].name,
+              //       cartController.cartProductList[i].quantity,
+              //       cartController.cartProductList[i].price,
+              //       cartController.cartProductList[i].imageUrl,
+              //       DateTime.now());
+
+              //   cartController.cartProductList
+              //       .remove(cartController.cartProductList[i]);
+              // }
             },
             child: Text('Order Now'),
           ),

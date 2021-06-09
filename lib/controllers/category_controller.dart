@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:shop_x/models/categories.dart';
 
 class CategoryController extends GetxController {
-  var categoryList = List<Category>().obs;
+  List<Category> categoryList = List<Category>.empty(growable: true).obs;
+  //var categoryList = List<Category>().obs;
 
   @override
   void onInit() {

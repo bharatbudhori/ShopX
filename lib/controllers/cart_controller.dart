@@ -3,7 +3,8 @@ import 'package:get/get.dart';
 
 class CartController extends GetxController {
   var adddedToCart = true;
-  var cartProductList = List<CartItem>().obs;
+  List<CartItem> cartProductList = List<CartItem>.empty(growable: true).obs;
+  //var cartProductList = List<CartItem>().obs;
 
   @override
   void onInit() {

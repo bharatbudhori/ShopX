@@ -4,8 +4,11 @@ import 'package:shop_x/services/remote_services.dart';
 
 class ProductController extends GetxController {
   var isLoading = true.obs;
-  var productList = List<Product>().obs;
-  var favoriteList = List<Product>().obs;
+
+  List<Product> productList = List<Product>.empty(growable: true).obs;
+  List<Product> favoriteList = List<Product>.empty(growable: true).obs;
+  //var productList = List<Product>().obs;
+  //var favoriteList = List<Product>().obs;
 
   @override
   void onInit() {
@@ -22,7 +25,8 @@ class ProductController extends GetxController {
       var products = await RemoteServices.fetchCategoryProducts(brand);
       //print(products);
       if (products != null) {
-        productList.value = products;
+        //productList.value = products;
+        productList = products;
       }
     } finally {
       isLoading(false);
