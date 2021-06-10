@@ -59,7 +59,7 @@ class WelcomeScreen extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Get.to(() => LoginPage());
+                      Get.to(() => LoginScreen());
                     },
                     // defining the shape
                     shape: RoundedRectangleBorder(
@@ -77,7 +77,7 @@ class WelcomeScreen extends StatelessWidget {
                     minWidth: double.infinity,
                     height: 60,
                     onPressed: () {
-                      Get.to(() => SignupPage());
+                      Get.to(() => SignUpScreen());
                     },
                     color: Color(0xff0095FF),
                     shape: RoundedRectangleBorder(
