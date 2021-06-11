@@ -56,7 +56,26 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: <Widget>[
                       TextFormField(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(), labelText: "Email"),
+                          border: OutlineInputBorder(),
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                          //hoverColor: Colors.black,
+                          //fillColor: Colors.black,
+                          //focusColor: Colors.black,
+                        ),
+                        validator: (_val) {
+                          if (_val.isEmpty) {
+                            return "Can't be empty";
+                          } else if (!_val.contains('@') ||
+                              !_val.contains('.com')) {
+                            return "Please enter a valid email.";
+                          } else {
+                            return null;
+                          }
+                        },
                         // validator: MultiValidator([
                         //   RequiredValidator(
                         //       errorText: "This Field Is Required"),
@@ -73,7 +92,20 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: InputDecoration(
                             border: OutlineInputBorder(),
                             labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
                           ),
+                          validator: (_val) {
+                            if (_val.isEmpty) {
+                              return "Can't be empty";
+                            } else if (_val.length < 6) {
+                              return "Password too short";
+                            } else {
+                              return null;
+                            }
+                          },
                           // validator: MultiValidator([
                           //   RequiredValidator(
                           //       errorText: "Password Is Required"),

@@ -18,7 +18,7 @@ class AuthController extends GetxController {
         title: Text("Error"),
         content: Text(err),
         actions: <Widget>[
-          OutlineButton(
+          OutlinedButton(
             onPressed: () {
               Navigator.pop(context);
             },
@@ -43,11 +43,14 @@ class AuthController extends GetxController {
           accessToken: googleSignInAuthentication.accessToken);
 
       UserCredential result = await auth.signInWithCredential(credential);
+      print(result.user);
 
       User user = auth.currentUser;
       print(user.uid);
 
       return Future.value(true);
+    } else {
+      return null;
     }
   }
 
@@ -104,13 +107,13 @@ class AuthController extends GetxController {
     } catch (error) {
       switch (error.code) {
         case 'ERROR_EMAIL_ALREADY_IN_USE':
-          showErrDialog(context, "Email Already Exists");
+          Get.defaultDialog(content: Text('Email already in use.'));
           break;
         case 'ERROR_INVALID_EMAIL':
-          showErrDialog(context, "Invalid Email Address");
+          Get.defaultDialog(content: Text('Invalid email'));
           break;
         case 'ERROR_WEAK_PASSWORD':
-          showErrDialog(context, "Please Choose a stronger password");
+          Get.defaultDialog(content: Text('Error.. weak password'));
           break;
       }
       return Future.value(null);

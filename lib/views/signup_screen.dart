@@ -1,4 +1,4 @@
-import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/auth_controller.dart';
@@ -11,7 +11,7 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final AuthController authController = Get.find<AuthController>();
+  final AuthController authController = Get.put(AuthController());
 
   String email;
   String password;
@@ -53,10 +53,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     children: <Widget>[
                       TextFormField(
                         decoration: InputDecoration(
-                            border: OutlineInputBorder(), labelText: "Email"),
+                          border: OutlineInputBorder(),
+                          labelText: "Email",
+                          labelStyle: TextStyle(color: Colors.black),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.black),
+                          ),
+                        ),
                         validator: (_val) {
                           if (_val.isEmpty) {
                             return "Can't be empty";
+                          } else if (!_val.contains('@') ||
+                              !_val.contains('.com')) {
+                            return "Please enter a valid email.";
                           } else {
                             return null;
                           }
@@ -69,8 +78,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: TextFormField(
                           decoration: InputDecoration(
-                              border: OutlineInputBorder(),
-                              labelText: "Password"),
+                            border: OutlineInputBorder(),
+                            labelText: "Password",
+                            labelStyle: TextStyle(color: Colors.black),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.black),
+                            ),
+                          ),
+                          validator: (_val) {
+                            if (_val.isEmpty) {
+                              return "Can't be empty";
+                            } else if (_val.length < 6) {
+                              return "Password too short";
+                            } else {
+                              return null;
+                            }
+                          },
+
                           // validator: MultiValidator([
                           //   RequiredValidator(
                           //       errorText: "This Field Is Required."),
