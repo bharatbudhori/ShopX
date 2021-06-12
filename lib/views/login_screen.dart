@@ -1,4 +1,5 @@
 //import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/auth_controller.dart';
@@ -23,7 +24,7 @@ class _LoginScreenState extends State<LoginScreen> {
       formkey.currentState.save();
       authController.signin(email, password, context).then((value) {
         if (value != null) {
-          Get.offAll(() => HomePage());
+          Get.offAll(() => HomePage(value));
         }
       });
     }
@@ -134,9 +135,9 @@ class _LoginScreenState extends State<LoginScreen> {
                 padding: EdgeInsets.zero,
                 onPressed: () =>
                     authController.googleSignIn().whenComplete(() async {
-                  //User user = FirebaseAuth.instance.currentUser;
+                  User user = FirebaseAuth.instance.currentUser;
 
-                  Get.off(() => HomePage());
+                  Get.off(() => HomePage(user));
                 }),
                 child: Image(
                   image: AssetImage('assets/signin.png'),

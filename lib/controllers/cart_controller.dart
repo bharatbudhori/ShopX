@@ -1,7 +1,10 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_x/models/cart.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController {
+  var cartCollection = FirebaseFirestore.instance.collection('Cart');
   var adddedToCart = true;
   List<CartItem> cartProductList = List<CartItem>.empty(growable: true).obs;
   //var cartProductList = List<CartItem>().obs;
@@ -81,6 +84,7 @@ class CartController extends GetxController {
     int quantity,
     String imageURL,
     String price,
+    User user,
   ) {
     cartProductList.add(
       CartItem(
@@ -90,6 +94,13 @@ class CartController extends GetxController {
           price: price,
           imageUrl: imageURL),
     );
+    cartCollection.doc(user.uid).collection('${user.displayName} cart').add({
+      'ProductName': name,
+      'ProductID': id,
+      'Quantity': quantity,
+      'Price': price,
+      'ImageUrl': imageURL,
+    });
     update();
   }
 

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
@@ -9,7 +10,8 @@ class ProductTile extends StatelessWidget {
   final CartController cartController =
       Get.put(CartController(), permanent: true);
   final Product product;
-  ProductTile(this.product);
+  final User user;
+  ProductTile(this.product, this.user);
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class ProductTile extends StatelessWidget {
                                 ? Icon(Icons.favorite_rounded)
                                 : Icon(Icons.favorite_border),
                             onPressed: () {
-                              controller.toogleFavorite(product);
+                              controller.toogleFavorite(product, user);
                             },
                           ),
                         ),
@@ -128,11 +130,13 @@ class ProductTile extends StatelessWidget {
                               );
                             } else {
                               cartController.addProductsToCart(
-                                  product.id,
-                                  product.name,
-                                  1,
-                                  product.imageLink,
-                                  product.price);
+                                product.id,
+                                product.name,
+                                1,
+                                product.imageLink,
+                                product.price,
+                                user,
+                              );
 
                               print(product.name);
                               Get.snackbar(

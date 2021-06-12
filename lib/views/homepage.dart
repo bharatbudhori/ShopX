@@ -1,16 +1,24 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/controllers/auth_controller.dart';
 import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
 import 'package:shop_x/views/product_tile.dart';
+import 'package:shop_x/views/welcome_screen.dart';
 import 'favorite_screen.dart';
 
 class HomePage extends StatelessWidget {
+  final User user;
+  HomePage(
+    this.user,
+  );
+
   final ProductController productController = Get.put(ProductController());
   final CategoryController categoryController = Get.put(CategoryController());
-  //final CartController cartController = Get.put(CartController());
+  final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,6 +53,18 @@ class HomePage extends StatelessWidget {
               showBottomsheet();
             },
           ),
+          IconButton(
+            icon: Icon(Icons.exit_to_app_rounded),
+            onPressed: () {
+              authController.signOutUser().whenComplete(() => {
+                    Get.snackbar(
+                      "Loggeg out successfully !",
+                      'You have been logged out from your current session.',
+                    ),
+                    Get.offAll(WelcomeScreen())
+                  });
+            },
+          ),
         ],
       ),
       drawer: Drawer(
@@ -61,11 +81,15 @@ class HomePage extends StatelessWidget {
                   CircleAvatar(
                     radius: 40,
                     backgroundImage: NetworkImage(
-                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0DI22pl34SeQZ9RBxIfjNGyjaquYEIvuVow&usqp=CAU',
+                      user.photoURL == null
+                          ? 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png'
+                          : user.photoURL,
                     ),
                   ),
                   Text(
-                    'Maximilian   🖊️',
+                    user.displayName == null
+                        ? "No data available"
+                        : user.displayName,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,
@@ -160,7 +184,8 @@ class HomePage extends StatelessWidget {
                 //physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
                   if (productController.productList[index].rating != null) {
-                    return ProductTile(productController.productList[index]);
+                    return ProductTile(
+                        productController.productList[index], user);
                   } else {
                     return Text(
                       '',

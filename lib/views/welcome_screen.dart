@@ -37,7 +37,7 @@ class WelcomeScreen extends StatelessWidget {
                     height: 20,
                   ),
                   Text(
-                    "BackSlash Flutter provides extraordinary flutter tutorials. Do Subscribe! ",
+                    "Welcome to ShopX, it's really nice to see you here.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.grey[700],
