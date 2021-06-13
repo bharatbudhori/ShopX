@@ -57,7 +57,8 @@ class CartScreen extends StatelessWidget {
                 ),
                 direction: DismissDirection.endToStart,
                 onDismissed: (direction) {
-                  controller.deletion(index);
+                  controller.deletion(
+                      index, controller.cartProductList[index].id);
                 },
                 child: Card(
                   elevation: 8,

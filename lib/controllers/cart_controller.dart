@@ -2,6 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_x/models/cart.dart';
 import 'package:get/get.dart';
+import '../views/login_screen.dart';
+
+final UserController userController = Get.put(UserController());
+User currentUser = userController.currentUser;
 
 class CartController extends GetxController {
   var cartCollection = FirebaseFirestore.instance.collection('Cart');
@@ -84,7 +88,6 @@ class CartController extends GetxController {
     int quantity,
     String imageURL,
     String price,
-    User user,
   ) {
     cartProductList.add(
       CartItem(
@@ -94,7 +97,11 @@ class CartController extends GetxController {
           price: price,
           imageUrl: imageURL),
     );
-    cartCollection.doc(user.uid).collection('${user.displayName} cart').add({
+    cartCollection
+        .doc(currentUser.uid)
+        .collection('${currentUser.displayName} cart')
+        .doc(id.toString())
+        .set({
       'ProductName': name,
       'ProductID': id,
       'Quantity': quantity,
@@ -104,8 +111,15 @@ class CartController extends GetxController {
     update();
   }
 
-  void deletion(int index) {
+  void deletion(int index, int id) {
     cartProductList.removeAt(index);
+    cartCollection
+        .doc(currentUser.uid)
+        .collection('${currentUser.displayName} cart')
+        .doc(id.toString())
+        .delete();
+
+    //cartCollection.doc()
     update();
   }
 }

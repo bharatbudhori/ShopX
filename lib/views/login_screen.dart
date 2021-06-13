@@ -7,6 +7,8 @@ import 'package:shop_x/views/homepage.dart';
 import 'package:shop_x/views/signup_screen.dart';
 //import 'package:flutter_auths/controllers/authentications.dart';
 
+User loggedInUser;
+
 class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
@@ -136,6 +138,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 onPressed: () =>
                     authController.googleSignIn().whenComplete(() async {
                   User user = FirebaseAuth.instance.currentUser;
+                  loggedInUser = user;
 
                   Get.off(() => HomePage(user));
                 }),
@@ -162,4 +165,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+class UserController extends GetxController {
+  User currentUser = loggedInUser;
 }

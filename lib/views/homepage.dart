@@ -184,8 +184,7 @@ class HomePage extends StatelessWidget {
                 //physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
                   if (productController.productList[index].rating != null) {
-                    return ProductTile(
-                        productController.productList[index], user);
+                    return ProductTile(productController.productList[index]);
                   } else {
                     return Text(
                       '',
