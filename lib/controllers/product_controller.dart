@@ -15,7 +15,7 @@ class ProductController extends GetxController {
 
   List<Product> productList = List<Product>.empty(growable: true).obs;
   List<Product> favoriteList = List<Product>.empty(growable: true).obs;
-  List data = [];
+  //List data = [];
   //var productList = List<Product>().obs;
   //var favoriteList = List<Product>().obs;
 
@@ -34,22 +34,22 @@ class ProductController extends GetxController {
   //         ),
   //   );
 
-  void fetchFavorites() async {
-    var collectionReferece = favoriteCollection
-        .doc(currentUser.uid)
-        .collection('${currentUser.displayName} Favorites');
+  // void fetchFavorites() async {
+  //   var collectionReferece = favoriteCollection
+  //       .doc(currentUser.uid)
+  //       .collection('${currentUser.displayName} Favorites');
 
-    collectionReferece.get().then((collectionSnapshot) {
-      data.insert(0, collectionSnapshot.docs);
-    });
+  //   collectionReferece.get().then((collectionSnapshot) {
+  //     data.insert(0, collectionSnapshot.docs);
+  //   });
 
-    print(data);
-  }
+  //   //print(data);
+  // }
 
   @override
   void onInit() {
     fetchProducts(null);
-    fetchFavorites();
+    //fetchFavorites();
     super.onInit();
   }
 

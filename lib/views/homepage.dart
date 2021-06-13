@@ -55,13 +55,14 @@ class HomePage extends StatelessWidget {
           ),
           IconButton(
             icon: Icon(Icons.exit_to_app_rounded),
-            onPressed: () {
-              authController.signOutUser().whenComplete(() => {
+            onPressed: () async {
+              await authController.signOutUser().whenComplete(() => {
+                    Get.offAll(() => WelcomeScreen()),
                     Get.snackbar(
                       "Loggeg out successfully !",
                       'You have been logged out from your current session.',
+                      backgroundColor: Colors.blue,
                     ),
-                    Get.offAll(WelcomeScreen())
                   });
             },
           ),
@@ -87,9 +88,7 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    user.displayName == null
-                        ? "No data available"
-                        : user.displayName,
+                    user.displayName == null ? user.uid : user.displayName,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 30,

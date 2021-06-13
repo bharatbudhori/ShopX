@@ -1,14 +1,18 @@
 import 'dart:ui';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:shop_x/views/signup_screen.dart';
+import 'package:shop_x/controllers/auth_controller.dart';
+//import 'package:shop_x/views/signup_screen.dart';
 import 'package:get/get.dart';
 
+import 'homepage.dart';
 import 'login_screen.dart';
 
 class WelcomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final AuthController authController = Get.put(AuthController());
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -52,46 +56,64 @@ class WelcomeScreen extends StatelessWidget {
                     image: DecorationImage(
                         image: AssetImage("assets/welcome.png"))),
               ),
-              Column(
-                children: <Widget>[
-                  // the login button
-                  MaterialButton(
-                    minWidth: double.infinity,
-                    height: 60,
-                    onPressed: () {
-                      Get.to(() => LoginScreen());
-                    },
-                    // defining the shape
-                    shape: RoundedRectangleBorder(
-                        side: BorderSide(color: Colors.black),
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text(
-                      "Login",
-                      style:
-                          TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
-                    ),
+              GestureDetector(
+                onTap: () =>
+                    authController.googleSignIn().whenComplete(() async {
+                  User user = FirebaseAuth.instance.currentUser;
+                  loggedInUser = user;
+
+                  Get.off(() => HomePage(user));
+                }),
+                child: Container(
+                  height: 70,
+                  width: 400,
+                  child: Image(
+                    image: AssetImage('assets/signin.png'),
+                    fit: BoxFit.cover,
                   ),
-                  // creating the signup button
-                  SizedBox(height: 20),
-                  MaterialButton(
-                    minWidth: double.infinity,
-                    height: 60,
-                    onPressed: () {
-                      Get.to(() => SignUpScreen());
-                    },
-                    color: Color(0xff0095FF),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(50)),
-                    child: Text(
-                      "Sign up",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 18),
-                    ),
-                  )
-                ],
-              )
+                ),
+              ),
+
+              // Column(
+              //   children: <Widget>[
+              //     // the login button
+              //     MaterialButton(
+              //       minWidth: double.infinity,
+              //       height: 60,
+              //       onPressed: () {
+              //         Get.to(() => LoginScreen());
+              //       },
+              //       // defining the shape
+              //       shape: RoundedRectangleBorder(
+              //           side: BorderSide(color: Colors.black),
+              //           borderRadius: BorderRadius.circular(50)),
+              //       child: Text(
+              //         "Login",
+              //         style:
+              //             TextStyle(fontWeight: FontWeight.w600, fontSize: 18),
+              //       ),
+              //     ),
+              //     // creating the signup button
+              //     SizedBox(height: 20),
+              //     MaterialButton(
+              //       minWidth: double.infinity,
+              //       height: 60,
+              //       onPressed: () {
+              //         Get.to(() => SignUpScreen());
+              //       },
+              //       color: Color(0xff0095FF),
+              //       shape: RoundedRectangleBorder(
+              //           borderRadius: BorderRadius.circular(50)),
+              //       child: Text(
+              //         "Sign up",
+              //         style: TextStyle(
+              //             color: Colors.white,
+              //             fontWeight: FontWeight.w600,
+              //             fontSize: 18),
+              //       ),
+              //     )
+              //   ],
+              // )
             ],
           ),
         ),

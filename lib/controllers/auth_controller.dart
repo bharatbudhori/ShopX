@@ -105,28 +105,20 @@ class AuthController extends GetxController {
       return Future.value(user);
       // return Future.value(true);
     } catch (error) {
-      switch (error.code) {
-        case 'ERROR_EMAIL_ALREADY_IN_USE':
-          Get.defaultDialog(content: Text('Email already in use.'));
-          break;
-        case 'ERROR_INVALID_EMAIL':
-          Get.defaultDialog(content: Text('Invalid email'));
-          break;
-        case 'ERROR_WEAK_PASSWORD':
-          Get.defaultDialog(content: Text('Error.. weak password'));
-          break;
-      }
+      print(error);
+      Get.snackbar('Error Signing in', error.toString());
       return Future.value(null);
     }
   }
 
-  Future<bool> signOutUser() async {
-    User user = auth.currentUser;
-    print(user.providerData[1].providerId);
-    if (user.providerData[1].providerId == 'google.com') {
-      await gooleSignIn.disconnect();
+  Future<void> signOutUser() async {
+    //User user = auth.currentUser;
+    try {
+      await auth.signOut();
+    } catch (e) {
+      print(e);
     }
-    await auth.signOut();
-    return Future.value(true);
+
+    //return Future.value(true);
   }
 }
