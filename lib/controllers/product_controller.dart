@@ -16,7 +16,7 @@ class ProductController extends GetxController {
 
   List<Product> productList = List<Product>.empty(growable: true).obs;
   List<Product> favoriteList = List<Product>.empty(growable: true).obs;
-  List<Favorite> cartProductList = List<Favorite>.empty(growable: true).obs;
+  List<Favorite> favProductList = List<Favorite>.empty(growable: true).obs;
 
   //List data = [];
   //var productList = List<Product>().obs;
@@ -52,6 +52,7 @@ class ProductController extends GetxController {
   @override
   void onInit() {
     fetchProducts(null);
+    favProductList.clear();
     fetchFavorites();
 
     //print(favoriteList);
@@ -60,6 +61,8 @@ class ProductController extends GetxController {
   }
 
   void fetchProducts(String brand) async {
+    print(favoriteList.length);
+
     if (brand == null) {
       brand = "maybelline";
     }
@@ -76,29 +79,45 @@ class ProductController extends GetxController {
     }
   }
 
-  void toogleFavorite(Product product) async {
-    product.isFavorite = !product.isFavorite;
-    if (product.isFavorite) {
+  void toogleFavorite({
+    Product product,
+    String imageUrl,
+    String name,
+    String price,
+    int prodID,
+  }) async {
+    //product.isFavorite = !product.isFavorite;
+    if (favProductList.any((element) => element.id == product.id)) {
+      favoriteList.remove(product);
+      favProductList.removeWhere(
+        (element) => element.imageUrl == imageUrl,
+      );
+
+      favoriteCollection
+          .doc(currentUser.uid)
+          .collection('${currentUser.displayName} Favorites')
+          .doc(product.id.toString())
+          .delete();
+    } else {
       favoriteList.add(product);
+      favProductList.insert(
+          0,
+          Favorite(
+              id: product.id,
+              name: product.name,
+              price: product.price,
+              imageUrl: product.imageLink));
 
       favoriteCollection
           .doc(currentUser.uid)
           .collection('${currentUser.displayName} Favorites')
           .doc(product.id.toString())
           .set({
-        'ProductName': product.name,
-        'ProductID': product.id,
-        'ImageURL': product.imageLink,
-        'Price': product.price,
+        'ProductName': name,
+        'ProductID': prodID,
+        'ImageURL': imageUrl,
+        'Price': price,
       });
-    } else if (!product.isFavorite) {
-      favoriteList.remove(product);
-
-      var todelete = favoriteCollection
-          .doc(currentUser.uid)
-          .collection('${currentUser.displayName} Favorites')
-          .doc(product.id.toString());
-      todelete.delete();
     }
 
     update();
@@ -112,7 +131,7 @@ class ProductController extends GetxController {
         .get();
 
     snapshot.docs.forEach((element) {
-      cartProductList.insert(
+      favProductList.insert(
           0,
           Favorite(
             id: element['ProductID'],

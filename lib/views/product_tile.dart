@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
-import 'package:shop_x/models/favorite.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/views/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
-  final CartController cartController =
-      Get.put(CartController(), permanent: true);
+  final CartController cartController = Get.put(CartController());
+  //final ProductController productController = Get.put(ProductController());
   final Product product;
 
   ProductTile(this.product);
@@ -61,18 +60,18 @@ class ProductTile extends StatelessWidget {
                             CircleAvatar(
                           backgroundColor: Colors.white,
                           child: IconButton(
-                            icon: product.isFavorite
+                            icon: controller.favProductList
+                                    .any((element) => element.id == product.id)
                                 ? Icon(Icons.favorite_rounded)
                                 : Icon(Icons.favorite_border),
                             onPressed: () {
-                              controller.toogleFavorite(product);
-                              controller.cartProductList.insert(
-                                  0,
-                                  Favorite(
-                                      id: product.id,
-                                      name: product.name,
-                                      price: product.price,
-                                      imageUrl: product.imageLink));
+                              controller.toogleFavorite(
+                                name: product.name,
+                                product: product,
+                                imageUrl: product.imageLink,
+                                prodID: product.id,
+                                price: product.price,
+                              );
                             },
                           ),
                         ),

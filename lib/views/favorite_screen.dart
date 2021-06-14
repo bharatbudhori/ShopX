@@ -51,7 +51,11 @@ class FavoriteScreen extends StatelessWidget {
           IconButton(
               icon: Icon(Icons.pages),
               onPressed: () {
-                print(productController.cartProductList[0].name);
+                if (productController.favProductList.length == 0) {
+                  print('FavProductList is empty!!!');
+                } else {
+                  print(productController.favProductList[0].name);
+                }
               }),
         ],
       ),
@@ -101,8 +105,14 @@ class FavoriteScreen extends StatelessWidget {
                           .delete();
 
                       //deleting from favoriteList
-                      productController.cartProductList.removeWhere((element) =>
-                          element.imageUrl == documnets['ImageURL']);
+                      productController.toogleFavorite(
+                        product: productController.favoriteList.firstWhere(
+                            (element) => element.id == documnets['ProductID']),
+                        name: documnets['ProductName'],
+                        imageUrl: documnets['ImageURL'],
+                        price: documnets['Price'],
+                        prodID: documnets['ProductID'],
+                      );
                     },
                     background: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
