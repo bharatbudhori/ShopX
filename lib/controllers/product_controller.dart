@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/models/favorite.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:shop_x/services/remote_services.dart';
 import '../views/login_screen.dart';
@@ -15,6 +16,8 @@ class ProductController extends GetxController {
 
   List<Product> productList = List<Product>.empty(growable: true).obs;
   List<Product> favoriteList = List<Product>.empty(growable: true).obs;
+  List<Favorite> cartProductList = List<Favorite>.empty(growable: true).obs;
+
   //List data = [];
   //var productList = List<Product>().obs;
   //var favoriteList = List<Product>().obs;
@@ -49,6 +52,9 @@ class ProductController extends GetxController {
   @override
   void onInit() {
     fetchProducts(null);
+    fetchFavorites();
+
+    //print(favoriteList);
     //fetchFavorites();
     super.onInit();
   }
@@ -95,6 +101,26 @@ class ProductController extends GetxController {
       todelete.delete();
     }
 
+    update();
+  }
+
+  void fetchFavorites() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Favorites')
+        .doc(currentUser.uid)
+        .collection('${currentUser.displayName} Favorites')
+        .get();
+
+    snapshot.docs.forEach((element) {
+      cartProductList.insert(
+          0,
+          Favorite(
+            id: element['ProductID'],
+            name: element['ProductName'],
+            price: element['Price'],
+            imageUrl: element['ImageURL'],
+          ));
+    });
     update();
   }
 }

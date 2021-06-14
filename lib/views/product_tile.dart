@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
+import 'package:shop_x/models/favorite.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/views/product_detail_screen.dart';
@@ -65,6 +66,13 @@ class ProductTile extends StatelessWidget {
                                 : Icon(Icons.favorite_border),
                             onPressed: () {
                               controller.toogleFavorite(product);
+                              controller.cartProductList.insert(
+                                  0,
+                                  Favorite(
+                                      id: product.id,
+                                      name: product.name,
+                                      price: product.price,
+                                      imageUrl: product.imageLink));
                             },
                           ),
                         ),

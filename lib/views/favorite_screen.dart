@@ -2,8 +2,42 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import 'package:shop_x/controllers/product_controller.dart';
+import 'package:get/get.dart';
 
 class FavoriteScreen extends StatelessWidget {
+  final ProductController productController = Get.put(ProductController());
+  // List<Favorite> cartProductList = List<Favorite>.empty(growable: true).obs;
+
+  // void toList() async {
+  //   QuerySnapshot snapshot = await FirebaseFirestore.instance
+  //       .collection('Favorites')
+  //       .doc(currentUser.uid)
+  //       .collection('${currentUser.displayName} Favorites')
+  //       .get();
+
+  //   snapshot.docs.forEach((element) {
+  //     cartProductList.insert(
+  //         0,
+  //         Favorite(
+  //           id: element['ProductID'],
+  //           name: element['ProductName'],
+  //           price: element['Price'],
+  //           imageUrl: element['ImageURL'],
+  //         ));
+  //   });
+
+  // snapshot.docs.map((element) {
+  //   Favorite(
+  //     id: element['ProductID'],
+  //     name: element['ProductName'],
+  //     price: element['Price'],
+  //     imageUrl: element['ImageURL'],
+  //   );
+  // }).toList();
+
+  //print(cartProductList[0].name);
+  //}
+
   @override
   Widget build(BuildContext context) {
     var favoriteCollection = FirebaseFirestore.instance
@@ -13,6 +47,13 @@ class FavoriteScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('My Favotites ❤️'),
+        actions: [
+          IconButton(
+              icon: Icon(Icons.pages),
+              onPressed: () {
+                print(productController.cartProductList[0].name);
+              }),
+        ],
       ),
       body: StreamBuilder(
           stream: favoriteCollection.snapshots(),
@@ -58,6 +99,10 @@ class FavoriteScreen extends StatelessWidget {
                       favoriteCollection
                           .doc(documnets['ProductID'].toString())
                           .delete();
+
+                      //deleting from favoriteList
+                      productController.cartProductList.removeWhere((element) =>
+                          element.imageUrl == documnets['ImageURL']);
                     },
                     background: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
