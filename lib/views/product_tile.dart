@@ -123,8 +123,8 @@ class ProductTile extends StatelessWidget {
                     init: cartController,
                     builder: (controller) {
                       return IconButton(
-                          icon: cartController.cartProductList.any((element) =>
-                                  element.imageUrl == product.imageLink)
+                          icon: cartController.cartProductList
+                                  .any((element) => element.id == product.id)
                               ? Icon(Icons.shopping_cart)
                               : Icon(Icons.shopping_cart_outlined),
                           onPressed: () {

@@ -16,6 +16,7 @@ class CartController extends GetxController {
   @override
   void onInit() {
     //addDummyData();
+    fetchCartItems();
     super.onInit();
   }
 
@@ -107,6 +108,27 @@ class CartController extends GetxController {
       'Quantity': quantity,
       'Price': price,
       'ImageUrl': imageURL,
+    });
+    update();
+  }
+
+  void fetchCartItems() async {
+    QuerySnapshot snapshot = await FirebaseFirestore.instance
+        .collection('Cart')
+        .doc(currentUser.uid)
+        .collection('${currentUser.displayName} cart')
+        .get();
+
+    snapshot.docs.forEach((element) {
+      cartProductList.insert(
+          0,
+          CartItem(
+            id: element['ProductID'],
+            name: element['ProductName'],
+            price: element['Price'],
+            imageUrl: element['ImageUrl'],
+            quantity: element['Quantity'],
+          ));
     });
     update();
   }
