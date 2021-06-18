@@ -30,22 +30,24 @@ class CartScreen extends StatelessWidget {
         title: Text('My Cart'),
         actions: [
           TextButton(
-            onPressed: () {
-              Get.to(() => OrderScreen());
+            onPressed: cartController.cartProductList.isEmpty
+                ? null
+                : () {
+                    Get.to(() => OrderScreen());
 
-              // for (int i = 0; i < cartController.cartProductList.length; i++) {
-              //   orderController.placeOrders(
-              //       cartController.cartProductList[i].id,
-              //       cartController.cartProductList[i].name,
-              //       cartController.cartProductList[i].quantity,
-              //       cartController.cartProductList[i].price,
-              //       cartController.cartProductList[i].imageUrl,
-              //       DateTime.now());
+                    // for (int i = 0; i < cartController.cartProductList.length; i++) {
+                    //   orderController.placeOrders(
+                    //       cartController.cartProductList[i].id,
+                    //       cartController.cartProductList[i].name,
+                    //       cartController.cartProductList[i].quantity,
+                    //       cartController.cartProductList[i].price,
+                    //       cartController.cartProductList[i].imageUrl,
+                    //       DateTime.now());
 
-              //   cartController.cartProductList
-              //       .remove(cartController.cartProductList[i]);
-              // }
-            },
+                    //   cartController.cartProductList
+                    //       .remove(cartController.cartProductList[i]);
+                    // }
+                  },
             child: Text('Order Now'),
           ),
         ],
