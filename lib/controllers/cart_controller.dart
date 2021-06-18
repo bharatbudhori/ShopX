@@ -10,13 +10,20 @@ User currentUser = userController.currentUser;
 class CartController extends GetxController {
   var cartCollection = FirebaseFirestore.instance.collection('Cart');
   var adddedToCart = true;
+  var totalPrice = 0.00.obs;
   List<CartItem> cartProductList = List<CartItem>.empty(growable: true).obs;
   //var cartProductList = List<CartItem>().obs;
 
   @override
-  void onInit() {
+  void onInit() async {
+    print('Cart Controller init called');
     //addDummyData();
-    fetchCartItems();
+    //print(double.parse('56.008'));
+    cartProductList.clear();
+    fetchCartItems().then((_) {
+      fetchTotal();
+    });
+    //fetchTotal();
     super.onInit();
   }
 
@@ -90,6 +97,7 @@ class CartController extends GetxController {
     String imageURL,
     String price,
   ) {
+    totalPrice += double.parse(price);
     cartProductList.add(
       CartItem(
           id: id,
@@ -112,7 +120,7 @@ class CartController extends GetxController {
     update();
   }
 
-  void fetchCartItems() async {
+  Future<void> fetchCartItems() async {
     QuerySnapshot snapshot = await FirebaseFirestore.instance
         .collection('Cart')
         .doc(currentUser.uid)
@@ -120,28 +128,34 @@ class CartController extends GetxController {
         .get();
 
     snapshot.docs.forEach((element) {
-      cartProductList.insert(
-          0,
-          CartItem(
-            id: element['ProductID'],
-            name: element['ProductName'],
-            price: element['Price'],
-            imageUrl: element['ImageUrl'],
-            quantity: element['Quantity'],
-          ));
+      cartProductList.add(CartItem(
+        id: element['ProductID'],
+        name: element['ProductName'],
+        price: element['Price'],
+        imageUrl: element['ImageUrl'],
+        quantity: element['Quantity'],
+      ));
     });
     update();
   }
 
-  void deletion(int index, int id) {
-    cartProductList.removeAt(index);
-    cartCollection
-        .doc(currentUser.uid)
-        .collection('${currentUser.displayName} cart')
-        .doc(id.toString())
-        .delete();
+  void deletion(int id, String price) {
+    cartProductList.removeWhere((element) => element.id == id);
+    //cartProductList.removeAt(index);
+    totalPrice -= double.parse(price);
+    // cartCollection
+    //     .doc(currentUser.uid)
+    //     .collection('${currentUser.displayName} cart')
+    //     .doc(id.toString())
+    //     .delete();
 
     //cartCollection.doc()
     update();
+  }
+
+  void fetchTotal() {
+    for (var i = 0; i < cartProductList.length; i++) {
+      totalPrice += double.parse(cartProductList[i].price);
+    }
   }
 }

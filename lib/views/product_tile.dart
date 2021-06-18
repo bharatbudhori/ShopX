@@ -120,43 +120,44 @@ class ProductTile extends StatelessWidget {
                   ),
                 ),
                 GetBuilder(
-                    init: cartController,
-                    builder: (controller) {
-                      return IconButton(
-                          icon: cartController.cartProductList
-                                  .any((element) => element.id == product.id)
-                              ? Icon(Icons.shopping_cart)
-                              : Icon(Icons.shopping_cart_outlined),
-                          onPressed: () {
-                            if (cartController.cartProductList.any((element) =>
-                                element.imageUrl == product.imageLink)) {
-                              Get.defaultDialog(
-                                title: 'Item Already present in your Cart.',
-                                content: Text('Tap on screen to close dialog.'),
-                              );
-                            } else {
-                              cartController.addProductsToCart(
-                                product.id,
-                                product.name,
-                                1,
-                                product.imageLink,
-                                product.price,
-                              );
+                  init: cartController,
+                  builder: (controller) {
+                    return IconButton(
+                      icon: cartController.cartProductList
+                              .any((element) => element.id == product.id)
+                          ? Icon(Icons.shopping_cart)
+                          : Icon(Icons.shopping_cart_outlined),
+                      onPressed: () {
+                        if (cartController.cartProductList
+                            .any((element) => element.id == product.id)) {
+                          Get.defaultDialog(
+                            title: 'Item Already present in your Cart.',
+                            content: Text('Tap on screen to close dialog.'),
+                          );
+                        } else {
+                          cartController.addProductsToCart(
+                            product.id,
+                            product.name,
+                            1,
+                            product.imageLink,
+                            product.price,
+                          );
 
-                              print(product.name);
-                              Get.snackbar(
-                                product.name,
-                                'Added to favorite',
-                                backgroundColor: Colors.pink[100],
-                                barBlur: 12,
-                                duration: Duration(milliseconds: 1500),
-                                dismissDirection:
-                                    SnackDismissDirection.HORIZONTAL,
-                                overlayBlur: 2,
-                              );
-                            }
-                          });
-                    })
+                          print(product.name);
+                          Get.snackbar(
+                            product.name,
+                            'Added to Cart',
+                            backgroundColor: Colors.pink[100],
+                            barBlur: 12,
+                            duration: Duration(milliseconds: 1500),
+                            dismissDirection: SnackDismissDirection.HORIZONTAL,
+                            overlayBlur: 2,
+                          );
+                        }
+                      },
+                    );
+                  },
+                )
               ],
             ),
           ],

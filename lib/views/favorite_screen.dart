@@ -49,7 +49,7 @@ class FavoriteScreen extends StatelessWidget {
         title: Text('My Favotites ❤️'),
         actions: [
           IconButton(
-              icon: Icon(Icons.pages),
+              icon: Icon(Icons.pages) ,
               onPressed: () {
                 if (productController.favProductList.length == 0) {
                   print('FavProductList is empty!!!');
