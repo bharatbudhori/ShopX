@@ -163,17 +163,19 @@ class CartController extends GetxController {
     //String imageUrl,
     String price,
     DateTime dateTime,
-    List<CartItem> orderList,
+    List<CartItem> orderListItem,
   }) {
-    orderController.orderList.add(Orders(
-      //id: id,
-      // name: name,
-      // quantity: quantity,
-      price: price,
-      // imageUrl: imageUrl,
-      dateTime: dateTime,
-      orderList: orderList,
-    ));
+    orderController.orderList.insert(
+        0,
+        Orders(
+          //id: id,
+          // name: name,
+          // quantity: quantity,
+          price: price,
+          // imageUrl: imageUrl,
+          dateTime: dateTime,
+          orderListItem: orderListItem,
+        ));
   }
 
   void fetchTotal() {

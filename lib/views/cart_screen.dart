@@ -7,7 +7,8 @@ import 'package:shop_x/controllers/orders_controller.dart';
 
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
-  final OrderController orderController = Get.put(OrderController());
+  final OrderController orderController =
+      Get.put(OrderController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,10 @@ class CartScreen extends StatelessWidget {
         .collection('Cart')
         .doc(currentUser.uid)
         .collection('${currentUser.displayName} cart');
+    var orderCollection = FirebaseFirestore.instance
+        .collection('Order')
+        .doc(currentUser.uid)
+        .collection('${currentUser.displayName} orders');
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
@@ -31,6 +36,11 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('My Cart'),
         actions: [
+          IconButton(
+              icon: Icon(Icons.check_box),
+              onPressed: () {
+                print(orderController.orderList[0].price);
+              }),
           TextButton(
             onPressed: cartController.cartProductList.isEmpty
                 ? null
@@ -42,7 +52,7 @@ class CartScreen extends StatelessWidget {
                     cartController.addToOrders(
                       dateTime: DateTime.now(),
                       price: cartController.totalPrice.toString(),
-                      orderList: cartController.cartProductList,
+                      orderListItem: cartController.cartProductList,
                     );
                     var snapshots = await FirebaseFirestore.instance
                         .collection('Cart')
@@ -54,6 +64,8 @@ class CartScreen extends StatelessWidget {
                             (_) => cartController.cartProductList.clear(),
                           );
                     }
+
+                    orderCollection.add({'dateTime': DateTime.now()});
 
                     // for (int i = 0; i < cartController.cartProductList.length; i++) {
                     //   orderController.placeOrders(

@@ -6,6 +6,7 @@ import 'package:shop_x/controllers/auth_controller.dart';
 import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
+import 'package:shop_x/views/order_screen.dart';
 import 'package:shop_x/views/product_tile.dart';
 import 'package:shop_x/views/welcome_screen.dart';
 import 'favorite_screen.dart';
@@ -100,7 +101,7 @@ class HomePage extends StatelessWidget {
             ),
             SizedBox(height: 20),
             ListTile(
-              onTap: () => Get.to(CartScreen()),
+              onTap: () => Get.to(() => CartScreen()),
               title: Text(
                 'Your Cart',
                 style: TextStyle(fontSize: 20),
@@ -114,7 +115,7 @@ class HomePage extends StatelessWidget {
               color: Colors.black,
             ),
             ListTile(
-              onTap: () => Get.to(FavoriteScreen()),
+              onTap: () => Get.to(() => FavoriteScreen()),
               title: Text(
                 'Your Favorites',
                 style: TextStyle(fontSize: 20),
@@ -128,7 +129,7 @@ class HomePage extends StatelessWidget {
               color: Colors.black,
             ),
             ListTile(
-              //onTap: () => Get.to(FavoriteScreen()),
+              onTap: () => Get.to(() => OrderScreen()),
               title: Text(
                 'Your Orders',
                 style: TextStyle(fontSize: 20),

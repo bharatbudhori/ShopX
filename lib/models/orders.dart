@@ -8,7 +8,7 @@ class Orders {
   // final String imageUrl;
   final String price;
   final DateTime dateTime;
-  final List<CartItem> orderList;
+  final List<CartItem> orderListItem;
 
   Orders({
     // @required this.id,
@@ -17,6 +17,6 @@ class Orders {
     // @required this.imageUrl,
     @required this.price,
     @required this.dateTime,
-    @required this.orderList,
+    @required this.orderListItem,
   });
 }
