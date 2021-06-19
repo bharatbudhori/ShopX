@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/orders_controller.dart';
-import 'package:shop_x/views/order_screen.dart';
+//import 'package:shop_x/views/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
   final CartController cartController = Get.put(CartController());
@@ -21,7 +21,9 @@ class CartScreen extends StatelessWidget {
         onPressed: null,
         label: Obx(
           () => Text(
-            'Total: \$${cartController.totalPrice}',
+            cartController.cartProductList.isEmpty
+                ? '\$0.00'
+                : 'Total: \$${cartController.totalPrice}',
             style: TextStyle(fontSize: 22, color: Colors.black),
           ),
         ),
@@ -32,8 +34,26 @@ class CartScreen extends StatelessWidget {
           TextButton(
             onPressed: cartController.cartProductList.isEmpty
                 ? null
-                : () {
-                    Get.to(() => OrderScreen());
+                : () async {
+                    Get.snackbar('Order Placed !',
+                        'Order has been placed for all items in your cart.');
+                    //await Future.delayed(Duration(seconds: 3));
+
+                    cartController.addToOrders(
+                      dateTime: DateTime.now(),
+                      price: cartController.totalPrice.toString(),
+                      orderList: cartController.cartProductList,
+                    );
+                    var snapshots = await FirebaseFirestore.instance
+                        .collection('Cart')
+                        .doc(currentUser.uid)
+                        .collection('${currentUser.displayName} cart')
+                        .get();
+                    for (var doc in snapshots.docs) {
+                      await doc.reference.delete().then(
+                            (_) => cartController.cartProductList.clear(),
+                          );
+                    }
 
                     // for (int i = 0; i < cartController.cartProductList.length; i++) {
                     //   orderController.placeOrders(

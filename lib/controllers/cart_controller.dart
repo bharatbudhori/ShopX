@@ -2,9 +2,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shop_x/models/cart.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/models/orders.dart';
 import '../views/login_screen.dart';
+import 'orders_controller.dart';
 
 final UserController userController = Get.put(UserController());
+final OrderController orderController = Get.put(OrderController());
 User currentUser = userController.currentUser;
 
 class CartController extends GetxController {
@@ -151,6 +154,26 @@ class CartController extends GetxController {
 
     //cartCollection.doc()
     update();
+  }
+
+  void addToOrders({
+    //int id,
+    //String name,
+    //int quantity,
+    //String imageUrl,
+    String price,
+    DateTime dateTime,
+    List<CartItem> orderList,
+  }) {
+    orderController.orderList.add(Orders(
+      //id: id,
+      // name: name,
+      // quantity: quantity,
+      price: price,
+      // imageUrl: imageUrl,
+      dateTime: dateTime,
+      orderList: orderList,
+    ));
   }
 
   void fetchTotal() {

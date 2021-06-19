@@ -8,25 +8,25 @@ class OrderController extends GetxController {
   final CartController cartController = Get.put(CartController());
   //var orderList = List<Orders>().obs;
 
-  void placeOrders(
-    int id,
-    String name,
-    int quantity,
-    String price,
-    String imageUrl,
-    DateTime dateTime,
-  ) {
-    orderList.add(
-      Orders(
-        id: id,
-        name: name,
-        quantity: quantity,
-        price: price,
-        imageUrl: imageUrl,
-        dateTime: dateTime,
-        orderList: cartController.cartProductList,
-      ),
-    );
-    update();
-  }
+//   void placeOrders({
+//     int id,
+//     String name,
+//     int quantity,
+//     String price,
+//     String imageUrl,
+//     DateTime dateTime,
+//   }) {
+//     orderList.add(
+//       Orders(
+//         id: id,
+//         name: name,
+//         quantity: quantity,
+//         price: price,
+//         imageUrl: imageUrl,
+//         dateTime: dateTime,
+//         orderList: cartController.cartProductList,
+//       ),
+//     );
+//     update();
+//   }
 }
