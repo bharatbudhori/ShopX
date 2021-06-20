@@ -24,7 +24,7 @@ class OrderController extends GetxController {
 
     snapshot.docs.forEach((element) {
       orderList.add(Orders(
-        dateTime: element['dateTime'],
+        dateTime: element['dateTime'].toDate(),
         price: element['totalPrice'],
       ));
     });

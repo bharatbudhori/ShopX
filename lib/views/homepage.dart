@@ -37,6 +37,12 @@ class HomePage extends StatelessWidget {
             },
           ),
           IconButton(
+            icon: Icon(Icons.shopping_bag_rounded),
+            onPressed: () {
+              Get.to(() => OrderScreen());
+            },
+          ),
+          IconButton(
             icon: Icon(Icons.shopping_cart),
             onPressed: () {
               Get.to(() => CartScreen());
