@@ -17,6 +17,6 @@ class Orders {
     // @required this.imageUrl,
     @required this.price,
     @required this.dateTime,
-    @required this.orderListItem,
+    this.orderListItem,
   });
 }

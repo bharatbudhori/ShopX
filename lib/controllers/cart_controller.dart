@@ -142,6 +142,11 @@ class CartController extends GetxController {
     update();
   }
 
+  void clearCart() {
+    cartProductList.clear();
+    update();
+  }
+
   void deletion(int id, String price) {
     cartProductList.removeWhere((element) => element.id == id);
     //cartProductList.removeAt(index);

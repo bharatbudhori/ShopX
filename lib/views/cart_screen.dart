@@ -54,18 +54,24 @@ class CartScreen extends StatelessWidget {
                       price: cartController.totalPrice.toString(),
                       orderListItem: cartController.cartProductList,
                     );
-                    var snapshots = await FirebaseFirestore.instance
-                        .collection('Cart')
-                        .doc(currentUser.uid)
-                        .collection('${currentUser.displayName} cart')
-                        .get();
-                    for (var doc in snapshots.docs) {
-                      await doc.reference.delete().then(
-                            (_) => cartController.cartProductList.clear(),
-                          );
-                    }
 
-                    orderCollection.add({'dateTime': DateTime.now()});
+                    await orderCollection.add(
+                      {
+                        'dateTime': DateTime.now(),
+                        'totalPrice': cartController.totalPrice.toString(),
+                        //'orderItems': cartController.cartProductList,
+                      },
+                    ).whenComplete(() async {
+                      var snapshots = await FirebaseFirestore.instance
+                          .collection('Cart')
+                          .doc(currentUser.uid)
+                          .collection('${currentUser.displayName} cart')
+                          .get();
+                      for (var doc in snapshots.docs) {
+                        cartController.clearCart();
+                        await doc.reference.delete();
+                      }
+                    });
 
                     // for (int i = 0; i < cartController.cartProductList.length; i++) {
                     //   orderController.placeOrders(

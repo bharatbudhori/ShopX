@@ -24,11 +24,19 @@ class OrderScreen extends StatelessWidget {
         itemCount: orderController.orderList.length,
         itemBuilder: (context, index) {
           return Card(
-            child: Text(
-              '${orderController.orderList[index].price}       ${orderController.orderList[index].dateTime}',
-              style: TextStyle(fontSize: 30, color: Colors.black),
-            ),
-          );
+              child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Text(
+                '${orderController.orderList[index].price}',
+                style: TextStyle(fontSize: 20),
+              ),
+              Text(
+                '${orderController.orderList[index].dateTime}',
+                style: TextStyle(fontSize: 20),
+              ),
+            ],
+          ));
         },
       ),
     );
