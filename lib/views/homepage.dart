@@ -8,6 +8,7 @@ import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/views/cart_screen.dart';
 import 'package:shop_x/views/order_screen.dart';
 import 'package:shop_x/views/product_tile.dart';
+import 'package:shop_x/views/user_detail_screen.dart';
 import 'package:shop_x/views/welcome_screen.dart';
 import 'favorite_screen.dart';
 
@@ -86,12 +87,19 @@ class HomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  CircleAvatar(
-                    radius: 40,
-                    backgroundImage: NetworkImage(
-                      user.photoURL == null
-                          ? 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png'
-                          : user.photoURL,
+                  GestureDetector(
+                    onTap: () {
+                      Get.to(() => UserScreen(
+                            user: user,
+                          ));
+                    },
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundImage: NetworkImage(
+                        user.photoURL == null
+                            ? 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png'
+                            : user.photoURL,
+                      ),
                     ),
                   ),
                   Text(
