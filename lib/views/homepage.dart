@@ -94,7 +94,7 @@ class HomePage extends StatelessWidget {
                           ));
                     },
                     child: CircleAvatar(
-                      radius: 40,
+                      radius: 50,
                       backgroundImage: NetworkImage(
                         user.photoURL == null
                             ? 'https://cdn.pixabay.com/photo/2017/06/13/12/53/profile-2398782_1280.png'
