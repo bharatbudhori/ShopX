@@ -7,9 +7,9 @@ import 'package:shop_x/controllers/product_controller.dart';
 
 class UserScreen extends StatelessWidget {
   final User user;
-  final CartController cartController = Get.find<CartController>();
-  final ProductController productController = Get.find<ProductController>();
-  final OrderController orderController = Get.find<OrderController>();
+  final ProductController productController = Get.put(ProductController());
+  final CartController cartController = Get.put(CartController());
+  final OrderController orderController = Get.put(OrderController());
   UserScreen({this.user});
   @override
   Widget build(BuildContext context) {

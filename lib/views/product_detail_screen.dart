@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:shop_x/controllers/cart_controller.dart';
+import 'package:shop_x/controllers/product_controller.dart';
+import 'package:shop_x/models/product.dart';
 
 class ProductDetailScreen extends StatelessWidget {
-  final String productName;
-  final String imageURL;
-  final String price;
-  final String description;
-  final double rating;
+  final ProductController productController = Get.put(ProductController());
+  final CartController cartController = Get.put(CartController());
+
+  final Product product;
 
   ProductDetailScreen({
-    this.description,
-    this.imageURL,
-    this.price,
-    this.productName,
-    this.rating,
+    this.product,
   });
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(productName),
+        title: Text(product.name),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -34,9 +33,9 @@ class ProductDetailScreen extends StatelessWidget {
                 width: double.infinity,
                 height: 300,
                 child: Hero(
-                  tag: imageURL,
+                  tag: product.imageLink,
                   child: Image.network(
-                    imageURL,
+                    product.imageLink,
                     fit: BoxFit.contain,
                   ),
                 ),
@@ -46,7 +45,7 @@ class ProductDetailScreen extends StatelessWidget {
               ),
               Container(
                 child: Text(
-                  productName,
+                  product.name,
                   style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
                 ),
               ),
@@ -58,7 +57,7 @@ class ProductDetailScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        '\$$price',
+                        '\$${product.price}',
                         style: TextStyle(
                           color: Colors.pink,
                           fontSize: 32,
@@ -66,8 +65,69 @@ class ProductDetailScreen extends StatelessWidget {
                         ),
                       ),
                     ),
-                    IconButton(
-                        icon: Icon(Icons.shopping_cart), onPressed: () {}),
+                    GetBuilder<ProductController>(
+                      init: Get.find<ProductController>(),
+                      builder: (controller) {
+                        return CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: IconButton(
+                            icon: controller.favProductList
+                                    .any((element) => element.id == product.id)
+                                ? Icon(Icons.favorite_rounded)
+                                : Icon(Icons.favorite_border),
+                            onPressed: () {
+                              controller.toogleFavorite(
+                                name: product.name,
+                                product: product,
+                                imageUrl: product.imageLink,
+                                prodID: product.id,
+                                price: product.price,
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    ),
+                    GetBuilder(
+                      init: cartController,
+                      builder: (controller) {
+                        return IconButton(
+                          icon: cartController.cartProductList
+                                  .any((element) => element.id == product.id)
+                              ? Icon(Icons.shopping_cart)
+                              : Icon(Icons.shopping_cart_outlined),
+                          onPressed: () {
+                            if (cartController.cartProductList
+                                .any((element) => element.id == product.id)) {
+                              Get.defaultDialog(
+                                title: 'Item Already present in your Cart.',
+                                content: Text('Tap on screen to close dialog.'),
+                              );
+                            } else {
+                              cartController.addProductsToCart(
+                                product.id,
+                                product.name,
+                                1,
+                                product.imageLink,
+                                product.price,
+                              );
+
+                              print(product.name);
+                              Get.snackbar(
+                                product.name,
+                                'Added to Cart',
+                                backgroundColor: Colors.pink[100],
+                                barBlur: 12,
+                                duration: Duration(milliseconds: 1500),
+                                dismissDirection:
+                                    SnackDismissDirection.HORIZONTAL,
+                                overlayBlur: 2,
+                              );
+                            }
+                          },
+                        );
+                      },
+                    ),
                     Container(
                       padding: EdgeInsets.all(10),
                       //height: 30,
@@ -78,7 +138,7 @@ class ProductDetailScreen extends StatelessWidget {
                       child: Row(
                         children: [
                           Text(
-                            rating.toString(),
+                            product.rating.toString(),
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 17,
@@ -106,7 +166,7 @@ class ProductDetailScreen extends StatelessWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      description,
+                      product.description,
                       style: TextStyle(
                         fontSize: 17,
                         fontWeight: FontWeight.w500,

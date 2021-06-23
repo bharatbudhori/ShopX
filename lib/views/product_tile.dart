@@ -27,11 +27,7 @@ class ProductTile extends StatelessWidget {
                   onTap: () {
                     //print(product.isFavorite);
                     Get.to(() => ProductDetailScreen(
-                          description: product.description,
-                          price: product.price,
-                          rating: product.rating,
-                          imageURL: product.imageLink,
-                          productName: product.name,
+                          product: product,
                         ));
                   },
                   child: Container(
