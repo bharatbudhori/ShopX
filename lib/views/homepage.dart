@@ -2,9 +2,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/auth_controller.dart';
 import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
+//import 'package:shop_x/services/admob_services.dart';
 import 'package:shop_x/views/cart_screen.dart';
 import 'package:shop_x/views/order_screen.dart';
 import 'package:shop_x/views/product_tile.dart';
@@ -197,6 +199,15 @@ class HomePage extends StatelessWidget {
 
                 //physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
                 itemBuilder: (context, index) {
+                  // if (index % 5 == 0) {
+                  //   return Container(
+                  //     height: 50,
+                  //     child: AdWidget(
+                  //       key: UniqueKey(),
+                  //       ad: AdMobService.createBannerAd()..load(),
+                  //     ),
+                  //   );
+                  // }
                   if (productController.productList[index].rating != null) {
                     return ProductTile(productController.productList[index]);
                   } else {

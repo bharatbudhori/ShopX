@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/services/admob_services.dart';
 
 class FavoriteScreen extends StatelessWidget {
   final ProductController productController = Get.put(ProductController());
@@ -49,7 +51,7 @@ class FavoriteScreen extends StatelessWidget {
         title: Text('My Favotites ❤️'),
         actions: [
           IconButton(
-              icon: Icon(Icons.pages) ,
+              icon: Icon(Icons.pages),
               onPressed: () {
                 if (productController.favProductList.length == 0) {
                   print('FavProductList is empty!!!');
@@ -58,6 +60,13 @@ class FavoriteScreen extends StatelessWidget {
                 }
               }),
         ],
+      ),
+      bottomNavigationBar: Container(
+        height: 50,
+        child: AdWidget(
+          key: UniqueKey(),
+          ad: AdMobService.createBannerAd()..load(),
+        ),
       ),
       body: StreamBuilder(
           stream: favoriteCollection.snapshots(),

@@ -1,8 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/orders_controller.dart';
+import 'package:shop_x/services/admob_services.dart';
 //import 'package:shop_x/views/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -31,6 +33,13 @@ class CartScreen extends StatelessWidget {
                 : 'Total: \$${cartController.totalPrice}',
             style: TextStyle(fontSize: 22, color: Colors.black),
           ),
+        ),
+      ),
+      bottomNavigationBar: Container(
+        height: 50,
+        child: AdWidget(
+          key: UniqueKey(),
+          ad: AdMobService.createBannerAd()..load(),
         ),
       ),
       appBar: AppBar(
