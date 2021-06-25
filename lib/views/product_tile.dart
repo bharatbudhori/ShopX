@@ -3,6 +3,7 @@ import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 import 'package:shop_x/models/product.dart';
 import 'package:get/get.dart';
+import 'package:shop_x/services/admob_services.dart';
 import 'package:shop_x/views/product_detail_screen.dart';
 
 class ProductTile extends StatelessWidget {
@@ -25,7 +26,7 @@ class ProductTile extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    //print(product.isFavorite);
+                    //AdMobService.createInterad();
                     Get.to(() => ProductDetailScreen(
                           product: product,
                         ));
