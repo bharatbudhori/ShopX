@@ -2,11 +2,11 @@ import 'dart:ui';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/auth_controller.dart';
 //import 'package:shop_x/views/signup_screen.dart';
 import 'package:get/get.dart';
-import 'package:shop_x/services/admob_services.dart';
+//import 'package:shop_x/services/admob_services.dart';
 
 import 'homepage.dart';
 import 'login_screen.dart';
@@ -16,13 +16,13 @@ class WelcomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final AuthController authController = Get.put(AuthController());
     return Scaffold(
-      bottomNavigationBar: Container(
-        height: 50,
-        child: AdWidget(
-          key: UniqueKey(),
-          ad: AdMobService.createBannerAd()..load(),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: 50,
+      //   child: AdWidget(
+      //     key: UniqueKey(),
+      //     ad: AdMobService.createBannerAd()..load(),
+      //   ),
+      // ),
       body: SafeArea(
         child: Container(
           // we will give media query height

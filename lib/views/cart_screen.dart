@@ -1,10 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/orders_controller.dart';
-import 'package:shop_x/services/admob_services.dart';
+//import 'package:shop_x/services/admob_services.dart';
 //import 'package:shop_x/views/order_screen.dart';
 
 class CartScreen extends StatelessWidget {
@@ -35,19 +35,20 @@ class CartScreen extends StatelessWidget {
           ),
         ),
       ),
-      bottomNavigationBar: Container(
-        height: 50,
-        child: AdWidget(
-          key: UniqueKey(),
-          ad: AdMobService.createBannerAd()..load(),
-        ),
-      ),
+      // bottomNavigationBar: Container(
+      //   height: 50,
+      //   child: AdWidget(
+      //     key: UniqueKey(),
+      //     ad: AdMobService.createBannerAd()..load(),
+      //   ),
+      // ),
       appBar: AppBar(
         title: Text('My Cart'),
         actions: [
           IconButton(
               icon: Icon(Icons.check_box),
               onPressed: () {
+                cartController.openCheckout();
                 print(orderController.orderList[0].price);
               }),
           TextButton(

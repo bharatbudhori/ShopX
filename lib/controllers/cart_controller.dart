@@ -1,16 +1,19 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:shop_x/models/cart.dart';
 import 'package:get/get.dart';
 import 'package:shop_x/models/orders.dart';
 import '../views/login_screen.dart';
 import 'orders_controller.dart';
+import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 final UserController userController = Get.put(UserController());
 final OrderController orderController = Get.put(OrderController());
 User currentUser = userController.currentUser;
 
 class CartController extends GetxController {
+  Razorpay razorpay;
   var cartCollection = FirebaseFirestore.instance.collection('Cart');
   var adddedToCart = true;
   var totalPrice = 0.00.obs;
@@ -26,8 +29,63 @@ class CartController extends GetxController {
     fetchCartItems().then((_) {
       fetchTotal();
     });
+
+    razorpay = new Razorpay();
+
+    razorpay.on(Razorpay.EVENT_PAYMENT_SUCCESS, handlerPaymentSuccess);
+    razorpay.on(Razorpay.EVENT_PAYMENT_ERROR, handlerPaymentFailure);
+    razorpay..on(Razorpay.EVENT_EXTERNAL_WALLET, handlerExternalWallet);
     //fetchTotal();
     super.onInit();
+  }
+
+  @override
+  void dispose() {
+    razorpay.clear();
+    super.dispose();
+  }
+
+  void openCheckout() {
+    var options = {
+      'key': 'rzp_test_L4FIsJm66e5SKK',
+      'amount': 100 * 100,
+      'name': 'Acme Corp.',
+      'description': 'Fine T-Shirt',
+      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'external': {
+        'wallets': ['paytm']
+      },
+    };
+
+    try {
+      razorpay.open(options);
+    } catch (e) {
+      print(e.toString());
+    }
+  }
+
+  void handlerPaymentSuccess() {
+    print('Payment Success');
+    Get.snackbar(
+      'Payment Successfull',
+      'Your payment for your order was successfull',
+      backgroundColor: Colors.green,
+      overlayBlur: 2,
+    );
+  }
+
+  void handlerPaymentFailure() {
+    print('Payment Failed');
+    Get.snackbar(
+      'Payment Failed !!',
+      'Your payment for your order was failed',
+      backgroundColor: Colors.red,
+      overlayBlur: 2,
+    );
+  }
+
+  void handlerExternalWallet() {
+    print('External Wallet');
   }
 
   // void addDummyData() {

@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_mobile_ads/google_mobile_ads.dart';
+//import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/orders_controller.dart';
 import 'package:intl/intl.dart';
-import 'package:shop_x/services/admob_services.dart';
+//import 'package:shop_x/services/admob_services.dart';
 
 class OrderScreen extends StatelessWidget {
   // OrderScreen({ Key? key }) : super(key: key);
@@ -19,13 +19,13 @@ class OrderScreen extends StatelessWidget {
     final OrderController orderController =
         Get.put(OrderController(), permanent: true);
     return Scaffold(
-        bottomNavigationBar: Container(
-          height: 50,
-          child: AdWidget(
-            key: UniqueKey(),
-            ad: AdMobService.createBannerAd()..load(),
-          ),
-        ),
+        // bottomNavigationBar: Container(
+        //   height: 50,
+        //   child: AdWidget(
+        //     key: UniqueKey(),
+        //     ad: AdMobService.createBannerAd()..load(),
+        //   ),
+        // ),
         appBar: AppBar(
           title: Text('Your Orders'),
           actions: [
