@@ -4,6 +4,7 @@ import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 //import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:shop_x/controllers/auth_controller.dart';
+import 'package:shop_x/controllers/cart_controller.dart';
 import 'package:shop_x/controllers/category_controller.dart';
 import 'package:shop_x/controllers/product_controller.dart';
 //import 'package:shop_x/services/admob_services.dart';
@@ -13,6 +14,7 @@ import 'package:shop_x/views/product_tile.dart';
 import 'package:shop_x/views/user_detail_screen.dart';
 import 'package:shop_x/views/welcome_screen.dart';
 import 'favorite_screen.dart';
+import 'package:badges/badges.dart';
 
 class HomePage extends StatelessWidget {
   final User user;
@@ -22,6 +24,7 @@ class HomePage extends StatelessWidget {
 
   final ProductController productController = Get.put(ProductController());
   final CategoryController categoryController = Get.put(CategoryController());
+  final CartController cartController = Get.put(CartController());
   final AuthController authController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
@@ -45,12 +48,24 @@ class HomePage extends StatelessWidget {
               Get.to(() => OrderScreen());
             },
           ),
-          IconButton(
-            icon: Icon(Icons.shopping_cart),
-            onPressed: () {
-              Get.to(() => CartScreen());
-            },
-          ),
+          GetBuilder(
+              init: cartController,
+              builder: (controller) {
+                return Badge(
+                  animationType: BadgeAnimationType.scale,
+                  position: BadgePosition.topEnd(top: -1, end: -2),
+                  badgeColor: Colors.blue,
+                  //shape: BadgeShape.square,
+                  badgeContent:
+                      Text(cartController.cartProductList.length.toString()),
+                  child: IconButton(
+                    icon: Icon(Icons.shopping_cart),
+                    onPressed: () {
+                      Get.to(() => CartScreen());
+                    },
+                  ),
+                );
+              }),
           IconButton(
             icon: Icon(Icons.filter_alt_sharp),
             onPressed: () {

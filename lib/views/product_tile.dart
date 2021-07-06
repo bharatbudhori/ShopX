@@ -145,10 +145,10 @@ class ProductTile extends StatelessWidget {
                             product.name,
                             'Added to Cart',
                             backgroundColor: Colors.pink[100],
-                            barBlur: 12,
                             duration: Duration(milliseconds: 1500),
                             dismissDirection: SnackDismissDirection.HORIZONTAL,
-                            overlayBlur: 2,
+                            overlayBlur: 0,
+                            snackPosition: SnackPosition.BOTTOM,
                           );
                         }
                       },
