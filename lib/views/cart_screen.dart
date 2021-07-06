@@ -18,10 +18,10 @@ class CartScreen extends StatelessWidget {
         .collection('Cart')
         .doc(currentUser.uid)
         .collection('${currentUser.displayName} cart');
-    var orderCollection = FirebaseFirestore.instance
-        .collection('Order')
-        .doc(currentUser.uid)
-        .collection('${currentUser.displayName} orders');
+    // var orderCollection = FirebaseFirestore.instance
+    //     .collection('Order')
+    //     .doc(currentUser.uid)
+    //     .collection('${currentUser.displayName} orders');
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.amber,
@@ -45,57 +45,63 @@ class CartScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('My Cart'),
         actions: [
-          IconButton(
-              icon: Icon(Icons.check_box),
-              onPressed: () {
-                cartController.openCheckout();
-                print(orderController.orderList[0].price);
-              }),
+          // IconButton(
+          //     icon: Icon(Icons.check_box),
+          //     onPressed: () {
+          //       cartController.openCheckout();
+          //       print(orderController.orderList[0].price);
+          //     }),
           TextButton(
             onPressed: cartController.cartProductList.isEmpty
                 ? null
-                : () async {
-                    Get.snackbar('Order Placed !',
-                        'Order has been placed for all items in your cart.');
-                    //await Future.delayed(Duration(seconds: 3));
-
-                    cartController.addToOrders(
-                      dateTime: DateTime.now(),
-                      price: cartController.totalPrice.toString(),
-                      orderListItem: cartController.cartProductList,
-                    );
-
-                    await orderCollection.add(
-                      {
-                        'dateTime': DateTime.now(),
-                        'totalPrice': cartController.totalPrice.toString(),
-                        //'orderItems': cartController.cartProductList,
-                      },
-                    ).whenComplete(() async {
-                      var snapshots = await FirebaseFirestore.instance
-                          .collection('Cart')
-                          .doc(currentUser.uid)
-                          .collection('${currentUser.displayName} cart')
-                          .get();
-                      for (var doc in snapshots.docs) {
-                        cartController.clearCart();
-                        await doc.reference.delete();
-                      }
-                    });
-
-                    // for (int i = 0; i < cartController.cartProductList.length; i++) {
-                    //   orderController.placeOrders(
-                    //       cartController.cartProductList[i].id,
-                    //       cartController.cartProductList[i].name,
-                    //       cartController.cartProductList[i].quantity,
-                    //       cartController.cartProductList[i].price,
-                    //       cartController.cartProductList[i].imageUrl,
-                    //       DateTime.now());
-
-                    //   cartController.cartProductList
-                    //       .remove(cartController.cartProductList[i]);
-                    // }
+                : () {
+                    cartController.openCheckout();
+                    print(orderController.orderList[0].price);
                   },
+            // onPressed: cartController.cartProductList.isEmpty
+            //     ? null
+            //     : () async {
+            //         Get.snackbar('Order Placed !',
+            //             'Order has been placed for all items in your cart.');
+            //         //await Future.delayed(Duration(seconds: 3));
+
+            //         cartController.addToOrders(
+            //           dateTime: DateTime.now(),
+            //           price: cartController.totalPrice.toString(),
+            //           orderListItem: cartController.cartProductList,
+            //         );
+
+            //         await orderCollection.add(
+            //           {
+            //             'dateTime': DateTime.now(),
+            //             'totalPrice': cartController.totalPrice.toString(),
+            //             //'orderItems': cartController.cartProductList,
+            //           },
+            //         ).whenComplete(() async {
+            //           var snapshots = await FirebaseFirestore.instance
+            //               .collection('Cart')
+            //               .doc(currentUser.uid)
+            //               .collection('${currentUser.displayName} cart')
+            //               .get();
+            //           for (var doc in snapshots.docs) {
+            //             cartController.clearCart();
+            //             await doc.reference.delete();
+            //           }
+            //         });
+
+            //         // for (int i = 0; i < cartController.cartProductList.length; i++) {
+            //         //   orderController.placeOrders(
+            //         //       cartController.cartProductList[i].id,
+            //         //       cartController.cartProductList[i].name,
+            //         //       cartController.cartProductList[i].quantity,
+            //         //       cartController.cartProductList[i].price,
+            //         //       cartController.cartProductList[i].imageUrl,
+            //         //       DateTime.now());
+
+            //         //   cartController.cartProductList
+            //         //       .remove(cartController.cartProductList[i]);
+            //         // }
+            //       },
             child: Text('Order Now'),
           ),
         ],

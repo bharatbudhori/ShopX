@@ -13,6 +13,14 @@ final OrderController orderController = Get.put(OrderController());
 User currentUser = userController.currentUser;
 
 class CartController extends GetxController {
+  var cartCollection1 = FirebaseFirestore.instance
+      .collection('Cart')
+      .doc(currentUser.uid)
+      .collection('${currentUser.displayName} cart');
+  var orderCollection = FirebaseFirestore.instance
+      .collection('Order')
+      .doc(currentUser.uid)
+      .collection('${currentUser.displayName} orders');
   Razorpay razorpay;
   var cartCollection = FirebaseFirestore.instance.collection('Cart');
   var adddedToCart = true;
@@ -40,18 +48,18 @@ class CartController extends GetxController {
   }
 
   @override
-  void dispose() {
+  void onClose() {
     razorpay.clear();
-    super.dispose();
+    super.onClose();
   }
 
   void openCheckout() {
     var options = {
       'key': 'rzp_test_L4FIsJm66e5SKK',
-      'amount': 100 * 100,
-      'name': 'Acme Corp.',
-      'description': 'Fine T-Shirt',
-      'prefill': {'contact': '8888888888', 'email': 'test@razorpay.com'},
+      'amount': totalPrice * 100,
+      'name': 'ShopX',
+      'description': 'Your Order',
+      'prefill': {'email': currentUser.email},
       'external': {
         'wallets': ['paytm']
       },
@@ -64,20 +72,44 @@ class CartController extends GetxController {
     }
   }
 
-  void handlerPaymentSuccess() {
+  void handlerPaymentSuccess(PaymentSuccessResponse response) async {
     print('Payment Success');
     Get.snackbar(
-      'Payment Successfull',
+      'Payment Successfull  ${response.paymentId}',
       'Your payment for your order was successfull',
       backgroundColor: Colors.green,
       overlayBlur: 2,
     );
+
+    addToOrders(
+      dateTime: DateTime.now(),
+      price: totalPrice.toString(),
+      orderListItem: cartProductList,
+    );
+
+    await orderCollection.add(
+      {
+        'dateTime': DateTime.now(),
+        'totalPrice': totalPrice.toString(),
+        //'orderItems': cartController.cartProductList,
+      },
+    ).whenComplete(() async {
+      var snapshots = await FirebaseFirestore.instance
+          .collection('Cart')
+          .doc(currentUser.uid)
+          .collection('${currentUser.displayName} cart')
+          .get();
+      for (var doc in snapshots.docs) {
+        clearCart();
+        await doc.reference.delete();
+      }
+    });
   }
 
-  void handlerPaymentFailure() {
+  void handlerPaymentFailure(PaymentFailureResponse response) {
     print('Payment Failed');
     Get.snackbar(
-      'Payment Failed !!',
+      'ERROR: ${response.code.toString()} - ${response.message}',
       'Your payment for your order was failed',
       backgroundColor: Colors.red,
       overlayBlur: 2,
